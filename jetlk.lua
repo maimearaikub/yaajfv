@@ -5,20 +5,18 @@
 --[[
     @author biggaboy212
     @name Cascade
-    @description A LuaU UI library based on macOS
+    @description A Luau UI library based on macOS Sequoia.
     @license MIT License
+
+    @buildDate "2026-03-07T05:35:18.152389800+00:00"
+    @buildCfg "Release"
+    @buildVers "v1.2.0"
 
     This file was automatically generated with darklua, it is not intended for manual editing.
 --]]
 
-_P = {
-	genDate = "2025-07-19T01:40:31.120562100+00:00",
-	cfg = "Debug",
-	vers = "v0.0.0",
-}
-
 --// Types
-type ExpectedObject__DARKLUA_TYPE_a = ((...any) -> ...any) | Instance | SomeOtherService
+type ExpectedObject__DARKLUA_TYPE_a = ((...any) -> ...any) | Instance | ServiceProvider
 type Instance__DARKLUA_TYPE_b = {
 	Name: string?,
 	Parent: Instance__DARKLUA_TYPE_b?,
@@ -50,7 +48,7 @@ type Instance__DARKLUA_TYPE_b = {
 	DescendantAdded: ((self: Instance__DARKLUA_TYPE_b, handler: (descendant: Instance__DARKLUA_TYPE_b) -> ()) -> RBXScriptConnection)?,
 	DescendantRemoving: ((self: Instance__DARKLUA_TYPE_b, handler: (descendant: Instance__DARKLUA_TYPE_b) -> ()) -> RBXScriptConnection)?,
 	Destroying: ((self: Instance__DARKLUA_TYPE_b, handler: () -> ()) -> RBXScriptConnection)?,
-	PropertyChanged: ((self: Instance__DARKLUA_TYPE_b, property: string) -> RBXScriptConnection)?
+	PropertyChanged: ((self: Instance__DARKLUA_TYPE_b, property: string) -> RBXScriptConnection)?,
 }
 
 type GuiBase2d__DARKLUA_TYPE_c = Instance__DARKLUA_TYPE_b & {
@@ -60,13 +58,13 @@ type GuiBase2d__DARKLUA_TYPE_c = Instance__DARKLUA_TYPE_b & {
 	SelectionBehaviorLeft: Enum.SelectionBehavior?,
 	SelectionBehaviorRight: Enum.SelectionBehavior?,
 	SelectionBehaviorUp: Enum.SelectionBehavior?,
-	SelectionGroup: boolean?
+	SelectionGroup: boolean?,
 }
 
 type LayerCollector__DARKLUA_TYPE_d = GuiBase2d__DARKLUA_TYPE_c & {
 	Enabled: boolean?,
 	ResetOnSpawn: boolean?,
-	ZIndexBehavior: Enum.ZIndexBehavior?
+	ZIndexBehavior: Enum.ZIndexBehavior?,
 }
 
 type GuiObject__DARKLUA_TYPE_e = GuiBase2d__DARKLUA_TYPE_c & {
@@ -86,7 +84,7 @@ type GuiObject__DARKLUA_TYPE_e = GuiBase2d__DARKLUA_TYPE_c & {
 	SizeConstraint: Enum.SizeConstraint?,
 	Visible: boolean?,
 	ZIndex: number?,
-	AutomaticSize: Enum.AutomaticSize?
+	AutomaticSize: Enum.AutomaticSize?,
 }
 
 type ScreenGui__DARKLUA_TYPE_f = LayerCollector__DARKLUA_TYPE_d & {
@@ -94,11 +92,11 @@ type ScreenGui__DARKLUA_TYPE_f = LayerCollector__DARKLUA_TYPE_d & {
 	IgnoreGuiInset: boolean?,
 	ScreenInsets: Enum.ScreenInsets?,
 	ClipToDeviceSafeArea: boolean?,
-	SafeAreaCompatibility: Enum.SafeAreaCompatibility?
+	SafeAreaCompatibility: Enum.SafeAreaCompatibility?,
 }
 
 type Frame__DARKLUA_TYPE_g = GuiObject__DARKLUA_TYPE_e & {
-	Style: Enum.FrameStyle?
+	Style: Enum.FrameStyle?,
 }
 
 type TextLabel__DARKLUA_TYPE_h = GuiObject__DARKLUA_TYPE_e & {
@@ -118,7 +116,7 @@ type TextLabel__DARKLUA_TYPE_h = GuiObject__DARKLUA_TYPE_e & {
 	TextTruncate: Enum.TextTruncate?,
 	TextWrapped: boolean?,
 	TextXAlignment: Enum.TextXAlignment?,
-	TextYAlignment: Enum.TextYAlignment?
+	TextYAlignment: Enum.TextYAlignment?,
 }
 
 type TextBox__DARKLUA_TYPE_i = GuiObject__DARKLUA_TYPE_e & {
@@ -161,7 +159,7 @@ type TextBox__DARKLUA_TYPE_i = GuiObject__DARKLUA_TYPE_e & {
 		self: TextBox__DARKLUA_TYPE_i,
 		handler: (enterPressed: boolean, inputThatCausedFocusLoss: InputObject) -> ()
 	) -> RBXScriptConnection)?,
-	ReturnPressedFromOnScreenKeyboard: ((self: TextBox__DARKLUA_TYPE_i, handler: () -> ()) -> RBXScriptConnection)?
+	ReturnPressedFromOnScreenKeyboard: ((self: TextBox__DARKLUA_TYPE_i, handler: () -> ()) -> RBXScriptConnection)?,
 }
 
 type ImageLabel__DARKLUA_TYPE_j = GuiObject__DARKLUA_TYPE_e & {
@@ -176,7 +174,7 @@ type ImageLabel__DARKLUA_TYPE_j = GuiObject__DARKLUA_TYPE_e & {
 	ScaleType: Enum.ScaleType?,
 	SliceCenter: Rect?,
 	SliceScale: number?,
-	TileSize: UDim2?
+	TileSize: UDim2?,
 }
 
 type GuiButton__DARKLUA_TYPE_k = GuiObject__DARKLUA_TYPE_e & {
@@ -195,7 +193,7 @@ type GuiButton__DARKLUA_TYPE_k = GuiObject__DARKLUA_TYPE_e & {
 	MouseButton1Up: ((self: GuiButton__DARKLUA_TYPE_k, handler: (x: number, y: number) -> ()) -> RBXScriptConnection)?,
 	MouseButton2Click: ((self: GuiButton__DARKLUA_TYPE_k, handler: () -> ()) -> RBXScriptConnection)?,
 	MouseButton2Down: ((self: GuiButton__DARKLUA_TYPE_k, handler: (x: number, y: number) -> ()) -> RBXScriptConnection)?,
-	MouseButton2Up: ((self: GuiButton__DARKLUA_TYPE_k, handler: (x: number, y: number) -> ()) -> RBXScriptConnection)?
+	MouseButton2Up: ((self: GuiButton__DARKLUA_TYPE_k, handler: (x: number, y: number) -> ()) -> RBXScriptConnection)?,
 }
 
 type TextButton__DARKLUA_TYPE_l = GuiButton__DARKLUA_TYPE_k & {
@@ -217,30 +215,44 @@ type TextButton__DARKLUA_TYPE_l = GuiButton__DARKLUA_TYPE_k & {
 	TextXAlignment: Enum.TextXAlignment?,
 	TextYAlignment: Enum.TextYAlignment?,
 
-	SetTextFromInput: ((self: TextButton__DARKLUA_TYPE_l, text: string) -> ())?
+	SetTextFromInput: ((self: TextButton__DARKLUA_TYPE_l, text: string) -> ())?,
 }
 
 type ValueState__DARKLUA_TYPE_m = {
 	Value: any,
-	Connect: (...any) -> any
+	Connect: (...any) -> any,
 }
 
-type Theme__DARKLUA_TYPE_n = { [any]: any } -- TODO
+type Theme__DARKLUA_TYPE_n = { [any]: any }
 
-type BaseComponent__DARKLUA_TYPE_o = {
+type Accent__DARKLUA_TYPE_o = {
+	Light: { [any]: any },
+	Dark: { [any]: any },
+}
+
+type BaseComponent__DARKLUA_TYPE_p = {
 	Type: string,
 	Theme: Theme__DARKLUA_TYPE_n,
-	Structures: { [string]: Instance__DARKLUA_TYPE_b | { any } }
+	Structures: { [string]: Instance__DARKLUA_TYPE_b | { any } },
 }
 
-type AppProperties__DARKLUA_TYPE_p = ScreenGui__DARKLUA_TYPE_f & {
+type AppProperties__DARKLUA_TYPE_q = ScreenGui__DARKLUA_TYPE_f & {
 	WindowPill: boolean?,
-	Theme: Theme__DARKLUA_TYPE_n?
+	Theme: Theme__DARKLUA_TYPE_n?,
+	Accent: Accent__DARKLUA_TYPE_o?,
 }
 
-type App__DARKLUA_TYPE_q = AppProperties__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_2
+type App__DARKLUA_TYPE_r = AppProperties__DARKLUA_TYPE_q & Components__DARKLUA_TYPE_9
 
-type WindowProperties__DARKLUA_TYPE_r = Frame__DARKLUA_TYPE_g & {
+type ComponentProperties__DARKLUA_TYPE_s = {
+	Theme: Theme__DARKLUA_TYPE_n?,
+	Accent: Accent__DARKLUA_TYPE_o?,
+	Parent: Instance__DARKLUA_TYPE_b?,
+}
+
+type ComponentContext__DARKLUA_TYPE_t = ComponentProperties__DARKLUA_TYPE_s & Components__DARKLUA_TYPE_9
+
+type WindowProperties__DARKLUA_TYPE_u = Frame__DARKLUA_TYPE_g & {
 	Searching: boolean?,
 	Draggable: boolean?,
 	Resizable: boolean?,
@@ -250,208 +262,216 @@ type WindowProperties__DARKLUA_TYPE_r = Frame__DARKLUA_TYPE_g & {
 	Minimized: boolean?,
 
 	Dropshadow: boolean?,
-	UIBlur: boolean?
+	UIBlur: boolean?,
 }
 
-type Window__DARKLUA_TYPE_s = BaseComponent__DARKLUA_TYPE_o & Components__DARKLUA_TYPE_2 & WindowProperties__DARKLUA_TYPE_r
+type Window__DARKLUA_TYPE_v = BaseComponent__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_9 & WindowProperties__DARKLUA_TYPE_u
 
-type SectionProperties__DARKLUA_TYPE_t = Frame__DARKLUA_TYPE_g & {
+type SectionProperties__DARKLUA_TYPE_w = Frame__DARKLUA_TYPE_g & {
 	Title: string?,
 	Disclosure: boolean?,
-	Expanded: boolean?
+	Expanded: boolean?,
 }
 
-type Section__DARKLUA_TYPE_u = BaseComponent__DARKLUA_TYPE_o & Components__DARKLUA_TYPE_2 & SectionProperties__DARKLUA_TYPE_t
+type Section__DARKLUA_TYPE_x = BaseComponent__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_9 & SectionProperties__DARKLUA_TYPE_w
 
-type TabProperties__DARKLUA_TYPE_v = Frame__DARKLUA_TYPE_g & {
+type TabProperties__DARKLUA_TYPE_y = Frame__DARKLUA_TYPE_g & {
 	Title: string?,
 	Icon: string?,
 	Indentation: number?,
-	Selected: boolean?
+	Selected: boolean?,
+	Page: Page__DARKLUA_TYPE_L?,
 }
 
-type Tab__DARKLUA_TYPE_w = BaseComponent__DARKLUA_TYPE_o & Components__DARKLUA_TYPE_2 & TabProperties__DARKLUA_TYPE_v
-
-type FormProperties__DARKLUA_TYPE_x = Frame__DARKLUA_TYPE_g
-
-type Form__DARKLUA_TYPE_y = BaseComponent__DARKLUA_TYPE_o & Components__DARKLUA_TYPE_2 & FormProperties__DARKLUA_TYPE_x
-
-type RowProperties__DARKLUA_TYPE_z = Frame__DARKLUA_TYPE_g & {
-	SearchIndex: string?
+type Tab__DARKLUA_TYPE_z = BaseComponent__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_9 & TabProperties__DARKLUA_TYPE_y & {
+	Navigate: (self: Tab__DARKLUA_TYPE_z, page: Page__DARKLUA_TYPE_L) -> nil,
 }
 
-type Row__DARKLUA_TYPE_A = BaseComponent__DARKLUA_TYPE_o & Components__DARKLUA_TYPE_2 & RowProperties__DARKLUA_TYPE_z & {
-	Left: (self: Row__DARKLUA_TYPE_A) -> Row__DARKLUA_TYPE_A,
-	Right: (self: Row__DARKLUA_TYPE_A) -> Row__DARKLUA_TYPE_A
+type FormProperties__DARKLUA_TYPE_A = Frame__DARKLUA_TYPE_g
+
+type Form__DARKLUA_TYPE_B = BaseComponent__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_9 & FormProperties__DARKLUA_TYPE_A
+
+type RowProperties__DARKLUA_TYPE_C = Frame__DARKLUA_TYPE_g & {
+	SearchIndex: string?,
 }
 
-type StackProperties__DARKLUA_TYPE_B = Frame__DARKLUA_TYPE_g & {
+type Row__DARKLUA_TYPE_D = BaseComponent__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_9 & RowProperties__DARKLUA_TYPE_C & {
+	Left: (self: Row__DARKLUA_TYPE_D) -> Row__DARKLUA_TYPE_D,
+	Right: (self: Row__DARKLUA_TYPE_D) -> Row__DARKLUA_TYPE_D,
+}
+
+type StackProperties__DARKLUA_TYPE_E = Frame__DARKLUA_TYPE_g & {
 	Padding: UDim?,
 	HorizontalAlignment: Enum.HorizontalAlignment?,
-	VerticalAlignment: Enum.VerticalAlignment?
+	VerticalAlignment: Enum.VerticalAlignment?,
 }
 
-type Stack__DARKLUA_TYPE_C = BaseComponent__DARKLUA_TYPE_o & Components__DARKLUA_TYPE_2 & StackProperties__DARKLUA_TYPE_B
+type Stack__DARKLUA_TYPE_F = BaseComponent__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_9 & StackProperties__DARKLUA_TYPE_E
 
-type TitleStackProperties__DARKLUA_TYPE_D = Frame__DARKLUA_TYPE_g & {
+type TitleStackProperties__DARKLUA_TYPE_G = Frame__DARKLUA_TYPE_g & {
 	Title: string?,
-	Subtitle: string?
+	Subtitle: string?,
 }
 
-type TitleStack__DARKLUA_TYPE_E = BaseComponent__DARKLUA_TYPE_o & Components__DARKLUA_TYPE_2 & TitleStackProperties__DARKLUA_TYPE_D
+type TitleStack__DARKLUA_TYPE_H = BaseComponent__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_9 & TitleStackProperties__DARKLUA_TYPE_G
 
-type PageSectionProperties__DARKLUA_TYPE_F = Frame__DARKLUA_TYPE_g & {
+type PageSectionProperties__DARKLUA_TYPE_I = Frame__DARKLUA_TYPE_g & {
 	Title: string?,
-	Subtitle: string?
+	Subtitle: string?,
 }
 
-type PageSection__DARKLUA_TYPE_G = BaseComponent__DARKLUA_TYPE_o & Components__DARKLUA_TYPE_2 & PageSectionProperties__DARKLUA_TYPE_F
+type PageSection__DARKLUA_TYPE_J = BaseComponent__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_9 & PageSectionProperties__DARKLUA_TYPE_I
 
-type LabelProperties__DARKLUA_TYPE_H = TextLabel__DARKLUA_TYPE_h
+type PageProperties__DARKLUA_TYPE_K = Frame__DARKLUA_TYPE_g
 
-type Label__DARKLUA_TYPE_I = BaseComponent__DARKLUA_TYPE_o & Components__DARKLUA_TYPE_2 & LabelProperties__DARKLUA_TYPE_H
+type Page__DARKLUA_TYPE_L = BaseComponent__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_9 & PageProperties__DARKLUA_TYPE_K
 
-type SymbolProperties__DARKLUA_TYPE_J = ImageLabel__DARKLUA_TYPE_j & {
-	Style: ("Primary" | "Secondary")?
+type LabelProperties__DARKLUA_TYPE_M = TextLabel__DARKLUA_TYPE_h
+
+type Label__DARKLUA_TYPE_N = BaseComponent__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_9 & LabelProperties__DARKLUA_TYPE_M
+
+type SymbolProperties__DARKLUA_TYPE_O = ImageLabel__DARKLUA_TYPE_j & {
+	Style: ("Primary" | "Secondary")?,
 }
 
-type Symbol__DARKLUA_TYPE_K = BaseComponent__DARKLUA_TYPE_o & Components__DARKLUA_TYPE_2 & SymbolProperties__DARKLUA_TYPE_J
+type Symbol__DARKLUA_TYPE_P = BaseComponent__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_9 & SymbolProperties__DARKLUA_TYPE_O
 
-type ToggleProperties__DARKLUA_TYPE_L = Frame__DARKLUA_TYPE_g & {
+type ToggleProperties__DARKLUA_TYPE_Q = Frame__DARKLUA_TYPE_g & {
 	Value: boolean?,
-	ValueChanged: ((self: Toggle__DARKLUA_TYPE_M, value: boolean) -> unknown)?
+	ValueChanged: ((self: Toggle__DARKLUA_TYPE_R, value: boolean) -> unknown)?,
 }
 
-type Toggle__DARKLUA_TYPE_M = BaseComponent__DARKLUA_TYPE_o & Components__DARKLUA_TYPE_2 & ToggleProperties__DARKLUA_TYPE_L
+type Toggle__DARKLUA_TYPE_R = BaseComponent__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_9 & ToggleProperties__DARKLUA_TYPE_Q
 
-type TextFieldProperties__DARKLUA_TYPE_N = Frame__DARKLUA_TYPE_g & {
+type TextFieldProperties__DARKLUA_TYPE_S = Frame__DARKLUA_TYPE_g & {
 	Placeholder: string?,
 	Value: string?,
-	TextChanged: ((self: TextField__DARKLUA_TYPE_O, text: string) -> unknown)?,
-	ValueChanged: ((self: TextField__DARKLUA_TYPE_O, value: string) -> unknown)?
+	TextChanged: ((self: TextField__DARKLUA_TYPE_T, text: string) -> unknown)?,
+	ValueChanged: ((self: TextField__DARKLUA_TYPE_T, value: string) -> unknown)?,
 }
 
-type TextField__DARKLUA_TYPE_O = BaseComponent__DARKLUA_TYPE_o & Components__DARKLUA_TYPE_2 & TextFieldProperties__DARKLUA_TYPE_N
+type TextField__DARKLUA_TYPE_T = BaseComponent__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_9 & TextFieldProperties__DARKLUA_TYPE_S
 
-type KeybindFieldProperties__DARKLUA_TYPE_P = Frame__DARKLUA_TYPE_g & {
+type KeybindFieldProperties__DARKLUA_TYPE_U = Frame__DARKLUA_TYPE_g & {
 	Placeholder: string?,
 	Value: Enum.KeyCode?,
 	BindPressed: ((
-		self: KeybindField__DARKLUA_TYPE_Q,
+		self: KeybindField__DARKLUA_TYPE_V,
 		value: Enum.KeyCode,
 		inputComplete: boolean,
 		gameProcessedEvent: boolean
 	) -> unknown)?,
-	ValueChanged: ((self: KeybindField__DARKLUA_TYPE_Q, value: Enum.KeyCode) -> unknown)?
+	ValueChanged: ((self: KeybindField__DARKLUA_TYPE_V, value: Enum.KeyCode) -> unknown)?,
 }
 
-type KeybindField__DARKLUA_TYPE_Q = BaseComponent__DARKLUA_TYPE_o & Components__DARKLUA_TYPE_2 & KeybindFieldProperties__DARKLUA_TYPE_P
+type KeybindField__DARKLUA_TYPE_V = BaseComponent__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_9 & KeybindFieldProperties__DARKLUA_TYPE_U
 
-type SliderProperties__DARKLUA_TYPE_R = ImageLabel__DARKLUA_TYPE_j & {
+type SliderProperties__DARKLUA_TYPE_W = ImageLabel__DARKLUA_TYPE_j & {
 	Minimum: number?,
 	Maximum: number?,
 	Value: number?,
-	ValueChanged: ((self: Slider__DARKLUA_TYPE_S, value: number) -> unknown)?
+	ValueChanged: ((self: Slider__DARKLUA_TYPE_X, value: number) -> unknown)?,
 }
 
-type Slider__DARKLUA_TYPE_S = BaseComponent__DARKLUA_TYPE_o & Components__DARKLUA_TYPE_2 & SliderProperties__DARKLUA_TYPE_R
+type Slider__DARKLUA_TYPE_X = BaseComponent__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_9 & SliderProperties__DARKLUA_TYPE_W
 
-type ButtonProperties__DARKLUA_TYPE_T = TextButton__DARKLUA_TYPE_l & {
+type ButtonProperties__DARKLUA_TYPE_Y = TextButton__DARKLUA_TYPE_l & {
 	State: ("Primary" | "Secondary" | "Destructive")?,
 	Label: string?,
-	Pushed: ((self: Button__DARKLUA_TYPE_U) -> unknown)?
+	Pushed: ((self: Button__DARKLUA_TYPE_Z) -> unknown)?,
 }
 
-type Button__DARKLUA_TYPE_U = BaseComponent__DARKLUA_TYPE_o & Components__DARKLUA_TYPE_2 & ButtonProperties__DARKLUA_TYPE_T
+type Button__DARKLUA_TYPE_Z = BaseComponent__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_9 & ButtonProperties__DARKLUA_TYPE_Y
 
-type StepperProperties__DARKLUA_TYPE_V = ImageLabel__DARKLUA_TYPE_j & {
+type StepperProperties__DARKLUA_TYPE__ = ImageLabel__DARKLUA_TYPE_j & {
 	Minimum: number?,
 	Maximum: number?,
 	Step: number?,
 	Fielded: boolean?,
 	Value: number?,
-	ValueChanged: ((self: Stepper__DARKLUA_TYPE_W, value: number) -> unknown)?
+	ValueChanged: ((self: Stepper__DARKLUA_TYPE_0, value: number) -> unknown)?,
 }
 
-type Stepper__DARKLUA_TYPE_W = BaseComponent__DARKLUA_TYPE_o & Components__DARKLUA_TYPE_2 & StepperProperties__DARKLUA_TYPE_V & {
+type Stepper__DARKLUA_TYPE_0 = BaseComponent__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_9 & StepperProperties__DARKLUA_TYPE__ & {
 	Increment: () -> nil,
-	Decrement: () -> nil
+	Decrement: () -> nil,
 }
 
-type RadioButtonGroupProperties__DARKLUA_TYPE_X = Frame__DARKLUA_TYPE_g & {
+type RadioButtonGroupProperties__DARKLUA_TYPE_1 = Frame__DARKLUA_TYPE_g & {
 	Options: { [number]: string }?,
 	Value: number?,
-	ValueChanged: ((self: RadioButtonGroup__DARKLUA_TYPE_Y, value: number) -> unknown)?
+	ValueChanged: ((self: RadioButtonGroup__DARKLUA_TYPE_2, value: number) -> unknown)?,
 }
 
-type RadioButtonGroup__DARKLUA_TYPE_Y = BaseComponent__DARKLUA_TYPE_o & Components__DARKLUA_TYPE_2 & RadioButtonGroupProperties__DARKLUA_TYPE_X & {
-	Option: (Name: string?) -> Frame__DARKLUA_TYPE_g
+type RadioButtonGroup__DARKLUA_TYPE_2 = BaseComponent__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_9 & RadioButtonGroupProperties__DARKLUA_TYPE_1 & {
+	Option: (Name: string?) -> Frame__DARKLUA_TYPE_g,
 }
 
-type PopUpButtonProperties__DARKLUA_TYPE_Z = Frame__DARKLUA_TYPE_g & {
+type PopUpButtonProperties__DARKLUA_TYPE_3 = Frame__DARKLUA_TYPE_g & {
 	Options: { [number]: string }?,
 	Expanded: boolean?,
-	Value: number?,
-	ValueChanged: ((self: PopUpButton__DARKLUA_TYPE__, value: number) -> unknown)?
+	Maximum: number?,
+	Value: (number | { number })?,
+	ValueChanged: ((self: PopUpButton__DARKLUA_TYPE_4, value: number | { number }) -> unknown)?,
 }
 
-type PopUpButton__DARKLUA_TYPE__ = BaseComponent__DARKLUA_TYPE_o & Components__DARKLUA_TYPE_2 & PopUpButtonProperties__DARKLUA_TYPE_Z & {
+type PopUpButton__DARKLUA_TYPE_4 = BaseComponent__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_9 & PopUpButtonProperties__DARKLUA_TYPE_3 & {
 	Option: (Name: string?) -> Frame__DARKLUA_TYPE_g,
-	Remove: (Index: number?) -> nil
+	Remove: (Index: number?) -> nil,
 }
 
-type PullDownButtonProperties__DARKLUA_TYPE_0 = Frame__DARKLUA_TYPE_g & {
+type PullDownButtonProperties__DARKLUA_TYPE_5 = Frame__DARKLUA_TYPE_g & {
 	Options: { [number]: string }?,
 	Expanded: boolean?,
 	Label: string?,
 	Value: number?,
-	ValueChanged: ((self: PullDownButton__DARKLUA_TYPE_1, value: number) -> unknown)?
+	ValueChanged: ((self: PullDownButton__DARKLUA_TYPE_6, value: number) -> unknown)?,
 }
 
-type PullDownButton__DARKLUA_TYPE_1 = BaseComponent__DARKLUA_TYPE_o & Components__DARKLUA_TYPE_2 & PullDownButtonProperties__DARKLUA_TYPE_0 & {
+type PullDownButton__DARKLUA_TYPE_6 = BaseComponent__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_9 & PullDownButtonProperties__DARKLUA_TYPE_5 & {
 	Option: (Name: string?) -> Frame__DARKLUA_TYPE_g,
-	Remove: (Index: number?) -> nil
+	Remove: (Index: number?) -> nil,
 }
 
-type NotificationProperties__DARKLUA_TYPE_NOTIF = Frame__DARKLUA_TYPE_g & {
+type NotificationProperties__DARKLUA_TYPE_7 = Frame__DARKLUA_TYPE_g & {
 	Title: string,
-	Subtitle: string?,
+	Subtitle: string,
 	App: string?,
 	AppIcon: string?,
 	Icon: string?,
 	Duration: number?,
-	Closed: ((self: Notification__DARKLUA_TYPE_NOTIF2, fromUser: boolean) -> unknown)?,
+	Closed: ((self: Notification__DARKLUA_TYPE_8) -> unknown)?,
 }
 
-type Notification__DARKLUA_TYPE_NOTIF2 = BaseComponent__DARKLUA_TYPE_o & {
-	Close: (self: Notification__DARKLUA_TYPE_NOTIF2, fromUser: boolean?) -> nil,
-	UpdateState: (self: Notification__DARKLUA_TYPE_NOTIF2, age: number, instant: boolean?) -> nil,
+type Notification__DARKLUA_TYPE_8 = BaseComponent__DARKLUA_TYPE_p & Components__DARKLUA_TYPE_9 & NotificationProperties__DARKLUA_TYPE_7 & {
+	Close: (self: Notification__DARKLUA_TYPE_8) -> nil,
 }
 
-type Components__DARKLUA_TYPE_2 = {
-	Window: (self: any, properties: WindowProperties__DARKLUA_TYPE_r?) -> Window__DARKLUA_TYPE_s,
-	Section: (self: any, properties: SectionProperties__DARKLUA_TYPE_t?) -> Tab__DARKLUA_TYPE_w,
-	Tab: (self: any, properties: TabProperties__DARKLUA_TYPE_v?) -> Tab__DARKLUA_TYPE_w,
-	Form: (self: any, properties: FormProperties__DARKLUA_TYPE_x?) -> Form__DARKLUA_TYPE_y,
-	Row: (self: any, properties: RowProperties__DARKLUA_TYPE_z?) -> Row__DARKLUA_TYPE_A,
-	VStack: (self: any, properties: StackProperties__DARKLUA_TYPE_B?) -> Stack__DARKLUA_TYPE_C,
-	HStack: (self: any, properties: StackProperties__DARKLUA_TYPE_B?) -> Stack__DARKLUA_TYPE_C,
-	TitleStack: (self: any, properties: TitleStackProperties__DARKLUA_TYPE_D?) -> TitleStack__DARKLUA_TYPE_E,
-	PageSection: (self: any, properties: PageSectionProperties__DARKLUA_TYPE_F?) -> PageSection__DARKLUA_TYPE_G,
-	Label: (self: any, properties: LabelProperties__DARKLUA_TYPE_H) -> Label__DARKLUA_TYPE_I,
-	Symbol: (self: any, properties: SymbolProperties__DARKLUA_TYPE_J) -> Symbol__DARKLUA_TYPE_K,
-	Toggle: (self: any, properties: ToggleProperties__DARKLUA_TYPE_L) -> Toggle__DARKLUA_TYPE_M,
-	TextField: (self: any, properties: TextFieldProperties__DARKLUA_TYPE_N) -> TextField__DARKLUA_TYPE_O,
-	KeybindField: (self: any, properties: KeybindFieldProperties__DARKLUA_TYPE_P) -> KeybindField__DARKLUA_TYPE_Q,
-	Slider: (self: any, properties: SliderProperties__DARKLUA_TYPE_R) -> Slider__DARKLUA_TYPE_S,
-	Button: (self: any, properties: ButtonProperties__DARKLUA_TYPE_T) -> Button__DARKLUA_TYPE_U,
-	Stepper: (self: any, properties: StepperProperties__DARKLUA_TYPE_V) -> Stepper__DARKLUA_TYPE_W,
-	RadioButtonGroup: (self: any, properties: RadioButtonGroupProperties__DARKLUA_TYPE_X) -> RadioButtonGroup__DARKLUA_TYPE_Y,
-	PopUpButton: (self: any, properties: PopUpButtonProperties__DARKLUA_TYPE_Z) -> PopUpButton__DARKLUA_TYPE__,
-	PullDownButton: (self: any, properties: PullDownButtonProperties__DARKLUA_TYPE_0) -> PullDownButton__DARKLUA_TYPE_1,
-	Notification: (self: any, properties: NotificationProperties__DARKLUA_TYPE_NOTIF) -> Notification__DARKLUA_TYPE_NOTIF2,
+type Components__DARKLUA_TYPE_9 = {
+	Window: (self: any, properties: WindowProperties__DARKLUA_TYPE_u?) -> Window__DARKLUA_TYPE_v,
+	Section: (self: any, properties: SectionProperties__DARKLUA_TYPE_w?) -> Section__DARKLUA_TYPE_x,
+	Tab: (self: any, properties: TabProperties__DARKLUA_TYPE_y?) -> Tab__DARKLUA_TYPE_z,
+	Page: (self: any, properties: PageProperties__DARKLUA_TYPE_K?) -> Page__DARKLUA_TYPE_L,
+	Form: (self: any, properties: FormProperties__DARKLUA_TYPE_A?) -> Form__DARKLUA_TYPE_B,
+	Row: (self: any, properties: RowProperties__DARKLUA_TYPE_C?) -> Row__DARKLUA_TYPE_D,
+	VStack: (self: any, properties: StackProperties__DARKLUA_TYPE_E?) -> Stack__DARKLUA_TYPE_F,
+	HStack: (self: any, properties: StackProperties__DARKLUA_TYPE_E?) -> Stack__DARKLUA_TYPE_F,
+	TitleStack: (self: any, properties: TitleStackProperties__DARKLUA_TYPE_G?) -> TitleStack__DARKLUA_TYPE_H,
+	PageSection: (self: any, properties: PageSectionProperties__DARKLUA_TYPE_I?) -> PageSection__DARKLUA_TYPE_J,
+	Label: (self: any, properties: LabelProperties__DARKLUA_TYPE_M) -> Label__DARKLUA_TYPE_N,
+	Symbol: (self: any, properties: SymbolProperties__DARKLUA_TYPE_O) -> Symbol__DARKLUA_TYPE_P,
+	Toggle: (self: any, properties: ToggleProperties__DARKLUA_TYPE_Q) -> Toggle__DARKLUA_TYPE_R,
+	TextField: (self: any, properties: TextFieldProperties__DARKLUA_TYPE_S) -> TextField__DARKLUA_TYPE_T,
+	KeybindField: (self: any, properties: KeybindFieldProperties__DARKLUA_TYPE_U) -> KeybindField__DARKLUA_TYPE_V,
+	Slider: (self: any, properties: SliderProperties__DARKLUA_TYPE_W) -> Slider__DARKLUA_TYPE_X,
+	Button: (self: any, properties: ButtonProperties__DARKLUA_TYPE_Y) -> Button__DARKLUA_TYPE_Z,
+	Stepper: (self: any, properties: StepperProperties__DARKLUA_TYPE__) -> Stepper__DARKLUA_TYPE_0,
+	RadioButtonGroup: (self: any, properties: RadioButtonGroupProperties__DARKLUA_TYPE_1) -> RadioButtonGroup__DARKLUA_TYPE_2,
+	PopUpButton: (self: any, properties: PopUpButtonProperties__DARKLUA_TYPE_3) -> PopUpButton__DARKLUA_TYPE_4,
+	PullDownButton: (self: any, properties: PullDownButtonProperties__DARKLUA_TYPE_5) -> PullDownButton__DARKLUA_TYPE_6,
+	Notification: (self: any, properties: NotificationProperties__DARKLUA_TYPE_7) -> Notification__DARKLUA_TYPE_8,
 }
-local __DIST __DIST={cache={}, load=function(m)if not __DIST.cache[m]then __DIST.cache[m]={c=__DIST[m]()}end return __DIST.cache[m].c end}do function __DIST.a()
+local __DIST={cache={}::any}do do local function __modImpl()
 --// Variables
 
 
@@ -472,10 +492,9 @@ utility.Clone = function(object: any)
 end
 
 utility.ProtectUI = function(gui: Instance): ScreenGui | string
-	-- if true then return utility.Clone(game:GetService("CoreGui")) end
-	-- local sHiddenUi, hiddenUi = pcall(function()
-	-- 	return gethui()
-	-- end)
+	local sHiddenUi, hiddenUi = pcall(function()
+		return gethui()
+	end)
 
 	local sCoreGui, coreGui = pcall(function()
 		local layer = utility.Clone(game:GetService("CoreGui"))
@@ -497,12 +516,488 @@ utility.ProtectUI = function(gui: Instance): ScreenGui | string
 end
 
 return utility
-end function __DIST.b()
+end function __DIST.a():typeof(__modImpl())local v=__DIST.cache.a if not v then v={c=__modImpl()}__DIST.cache.a=v end return v.c end end do local function __modImpl()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 return 1
-end function __DIST.c()
+end function __DIST.b():typeof(__modImpl())local v=__DIST.cache.b if not v then v={c=__modImpl()}__DIST.cache.b=v end return v.c end end do local function __modImpl()
 local binder = {}
 
 function binder.Apply(properties: { [string]: any }, object: any, excludes: { [number]: string }?): any
@@ -600,9 +1095,9 @@ function binder.Wrap(
 end
 
 return binder
-end function __DIST.d()
-local types = __DIST.load('b')
-local binder = __DIST.load('c')
+end function __DIST.c():typeof(__modImpl())local v=__DIST.cache.c if not v then v={c=__modImpl()}__DIST.cache.c=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
+local binder = __DIST.c()
 
 local creator = {}
 
@@ -688,9 +1183,9 @@ function creator.Create(className: string)
 end
 
 return creator
-end function __DIST.e()--// Imports
+end function __DIST.d():typeof(__modImpl())local v=__DIST.cache.d if not v then v={c=__modImpl()}__DIST.cache.d=v end return v.c end end do local function __modImpl()--// Imports
 
-local utility = __DIST.load('a')
+local utility = __DIST.a()
 
 --// Functions
 local function cast(service: string): any
@@ -699,6 +1194,7 @@ end
 
 --// Initialize
 return {
+	HttpService = cast("HttpService") :: HttpService,
 	TweenService = cast("TweenService") :: TweenService,
 	RunService = cast("RunService") :: RunService,
 	UserInputService = cast("UserInputService") :: UserInputService,
@@ -708,7 +1204,7 @@ return {
 	Players = cast("Players") :: Players,
 	Lighting = cast("Lighting") :: Lighting,
 }
-end function __DIST.f()
+end function __DIST.e():typeof(__modImpl())local v=__DIST.cache.e if not v then v={c=__modImpl()}__DIST.cache.e=v end return v.c end end do local function __modImpl()
 return {
   ["abc"] = "rbxassetid://100440409146443",
   ["abs"] = "rbxassetid://92363621005271",
@@ -3845,414 +4341,14 @@ return {
   ["zrButtonRoundedtopHorizontal"] = "rbxassetid://107608277098590",
   ["zzz"] = "rbxassetid://137515429343264",
 }
-end function __DIST.g()--// Imports
-
-local creator = __DIST.load('d')
-
---// References
-local value = creator.Value
-
---// Functions
-local function color4(color: Color3 | string, alpha: number)
-	local parsedColor = (typeof(color) == "Color3" and color) or (typeof(color) == "string" and Color3.fromHex(color))
-
-	return {
-		value(parsedColor),
-		value(1 - (alpha / 100)),
-	}
-end
-
---// Initialize
-return {
-	_id = "Dark",
-
-	Text = {
-		Primary = color4("FFFFFF", 85),
-		Secondary = color4("FFFFFF", 55),
-		Tertiary = color4("FFFFFF", 25),
-		Quaternary = color4("FFFFFF", 10),
-		Quinary = color4("FFFFFF", 5),
-
-		SelectionPrimary = color4("FFFFFF", 100),
-		PrimaryAccent = color4("FFFFFF", 38),
-	},
-
-	Accents = {
-		Red = color4("FF453A", 100),
-	},
-
-	Controls = {
-		Background = color4("1C1C1E", 100),
-
-		View = color4("1F1F21", 100),
-		ViewBorder = color4("FFFFFF", 5),
-
-		WindowControlIcon = color4("000000", 50),
-		WindowControlStroke = color4("FFFFFF", 10),
-		Exit = color4("FF5F57", 100),
-		Minimize = color4("FEBC2E", 100),
-		Zoom = color4("28C840", 100),
-
-		SwitchAccent = color4("478CF6", 100),
-
-		Selection = color4("E60852", 100), -- 007AFF
-		SelectionStroke = color4("E60852", 60),
-
-		SelectionFocused = color4("E60852", 100),
-		SelectionFocusedAccent = color4("FFFFFF", 85),
-
-		Sidebar = color4("202023", 84),
-		Separator = {
-			Background = color4("000000", 50),
-			Shadow = color4("FFFFFF", 0),
-		},
-
-		Titlebar = color4("363636", 100),
-		TitlebarShadow = {
-			Background = color4("000000", 0),
-			Color = value(ColorSequence.new({
-				ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
-				ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255)),
-			})),
-			Transparency = value(NumberSequence.new({
-				NumberSequenceKeypoint.new(0, 0.5),
-				NumberSequenceKeypoint.new(1, 1),
-			})),
-		},
-
-		Toggle = {
-			Knob = color4("FFFFFF", 100),
-			KnobEffects = color4("FFFFFF", 100),
-
-			SwitchOff = color4("7a7a7a", 40),
-			SwitchOn = color4("478cf6", 100),
-
-			DepthEffect = value(ColorSequence.new({
-				ColorSequenceKeypoint.new(0, Color3.fromRGB(225, 225, 225)),
-				ColorSequenceKeypoint.new(0.68, Color3.fromRGB(255, 255, 255)),
-				ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255)),
-			})),
-		},
-
-		Slider = {
-			Track = color4("2C2C2E", 100),
-			TrackEffects = color4("000000", 10),
-			TrackFill = color4("478CF6", 100),
-
-			Thumb = color4("FFFFFF", 100),
-			ThumbStroke = color4("000000", 20),
-			ThumbEffects = color4("FFFFFF", 80),
-		},
-
-		Button = {
-			Shadow = value(Color3.fromRGB(50, 50, 50)),
-			FillPrimary = value(ColorSequence.new({
-				ColorSequenceKeypoint.new(0, Color3.fromRGB(72, 148, 255)),
-				ColorSequenceKeypoint.new(1, Color3.fromRGB(10, 110, 255)),
-			})),
-			FillSecondary = value(ColorSequence.new({
-				ColorSequenceKeypoint.new(0, Color3.fromRGB(60, 60, 60)),
-				ColorSequenceKeypoint.new(1, Color3.fromRGB(55, 55, 55)),
-			})),
-		},
-
-		Stepper = {
-			Background = color4("373737", 100),
-			Dropshadow = color4("000000", 100),
-			Separator = color4("FFFFFF", 10),
-			Filler = color4("FFFFFF", 4),
-			SegmentShadow = value(ColorSequence.new({
-				ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
-				ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0)),
-			})),
-		},
-
-		RadioButtonGroup = {
-			Background = color4("373737", 100),
-			Dot = color4("FFFFFF", 100),
-			Stroke = color4("000000", 20),
-			Overlay = color4("FFFFFF", 8),
-			InnerShadow = color4("FFFFFF", 10),
-		},
-
-		MenuButton = {
-			IndicatorBackground = color4("FFFFFF", 10),
-			MenuBackground = color4("2C2C2E", 95),
-		},
-	},
-}
-end function __DIST.h()--// Imports
-
-local creator = __DIST.load('d')
-
---// References
-local value = creator.Value
-
---// Functions
-local function color4(color: Color3 | string, alpha: number)
-	local parsedColor = (typeof(color) == "Color3" and color) or (typeof(color) == "string" and Color3.fromHex(color))
-
-	return {
-		value(parsedColor),
-		value(1 - (alpha / 100)),
-	}
-end
-
---// Initialize
-return {
-	_id = "Light",
-
-	Text = {
-		Primary = color4("000000", 85),
-		Secondary = color4("000000", 50),
-		Tertiary = color4("000000", 25),
-		Quaternary = color4("000000", 10),
-		Quinary = color4("000000", 5),
-
-		SelectionPrimary = color4("FFFFFF", 100),
-		PrimaryAccent = color4("4D4D4D", 100),
-	},
-
-	Accents = {
-		Red = color4("FF3B30", 100),
-	},
-
-	Controls = {
-		Background = color4("FFFFFF", 100),
-
-		View = color4("FCFCFC", 100),
-		ViewBorder = color4("000000", 5),
-
-		WindowControlIcon = color4("000000", 50),
-		WindowControlStroke = color4("000000", 20),
-		Exit = color4("FF5F57", 100),
-		Minimize = color4("FEBC2E", 100),
-		Zoom = color4("28C840", 100),
-
-		SwitchAccent = color4("478CF6", 100),
-		Selection = color4("007AFF", 100),
-		SelectionStroke = color4("007AFF", 50),
-		SelectionFocused = color4("0A82FF", 100),
-		SelectionFocusedAccent = color4("FFFFFF", 85),
-
-		Sidebar = color4("EAEAEA", 84),
-		Separator = {
-			Background = color4("000000", 18),
-			Shadow = color4("000000", 10),
-		},
-
-		Titlebar = color4("EEEEEE", 100),
-		TitlebarShadow = {
-			Background = color4("EAEAEA", 25),
-			Color = value(ColorSequence.new({
-				ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
-				ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0)),
-			})),
-			Transparency = value(NumberSequence.new({
-				NumberSequenceKeypoint.new(0, 0.35),
-				NumberSequenceKeypoint.new(1, 0.35),
-			})),
-		},
-
-		Toggle = {
-			Knob = color4("FFFFFF", 100),
-			KnobEffects = color4("FFFFFF", 100),
-
-			SwitchOff = color4("000000", 9),
-			SwitchOn = color4("478cf6", 100),
-
-			DepthEffect = value(ColorSequence.new({
-				ColorSequenceKeypoint.new(0, Color3.fromRGB(225, 225, 225)),
-				ColorSequenceKeypoint.new(0.68, Color3.fromRGB(255, 255, 255)),
-				ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255)),
-			})),
-		},
-
-		Slider = {
-			Track = color4("000000", 5),
-			TrackEffects = color4("000000", 0),
-
-			Thumb = color4("FFFFFF", 100),
-			ThumbStroke = color4("000000", 2),
-			ThumbEffects = color4("FFFFFF", 100),
-		},
-
-		Button = {
-			Shadow = value(Color3.new(0, 0, 0)),
-			FillPrimary = value(ColorSequence.new({
-				ColorSequenceKeypoint.new(0, Color3.fromRGB(43, 145, 255)),
-				ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 122, 255)), -- color buttpon
-			})),
-			FillSecondary = value(ColorSequence.new({
-				ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
-				ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255)),
-			})),
-		},
-
-		Stepper = {
-			Background = color4("FFFFFF", 100),
-			Dropshadow = color4("000000", 100),
-			Separator = color4("000000", 22),
-			Filler = color4("000000", 5),
-			SegmentShadow = value(ColorSequence.new({
-				ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
-				ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255)),
-			})),
-		},
-
-		RadioButtonGroup = {
-			Background = color4("FFFFFF", 100),
-			Dot = color4("FFFFFF", 100),
-			Stroke = color4("000000", 8),
-			Overlay = color4("FFFFFF", 17),
-			InnerShadow = color4("000000", 10),
-		},
-		
-		MenuButton = {
-			IndicatorBackground = color4("000000", 5),
-			MenuBackground = color4("F6F6F6", 95),
-		}
-	},
-}
-end function __DIST.g2()
-
-local creator = __DIST.load('d')
-local value = creator.Value
-
-local function color4(color, alpha)
-	local parsedColor = (typeof(color) == 'Color3' and color) or Color3.fromHex(color)
-	return { value(parsedColor), value(1 - (alpha / 100)) }
-end
-
-return {
-	_id = 'Amethyst',
-
-	Text = {
-		Primary = color4('EDD9FF', 92),
-		Secondary = color4('C9A8E8', 70),
-		Tertiary = color4('B08AC8', 40),
-		Quaternary = color4('9B6FBD', 15),
-		Quinary = color4('9B6FBD', 8),
-		SelectionPrimary = color4('FFFFFF', 100),
-		PrimaryAccent = color4('D4AAFF', 50),
-	},
-
-	Accents = {
-		Red = color4('FF453A', 100),
-	},
-
-	Controls = {
-		Background = color4('1A0A2E', 100),
-
-		View = color4('220D3A', 100),
-		ViewBorder = color4('9B6FBD', 12),
-
-		WindowControlIcon = color4('000000', 50),
-		WindowControlStroke = color4('C9A8E8', 12),
-		Exit = color4('FF5F57', 100),
-		Minimize = color4('FEBC2E', 100),
-		Zoom = color4('28C840', 100),
-
-		SwitchAccent = color4('BF5AF2', 100),
-
-		Selection = color4('9B35D4', 100),
-		SelectionStroke = color4('9B35D4', 60),
-
-		SelectionFocused = color4('AE4FE0', 100),
-		SelectionFocusedAccent = color4('FFFFFF', 90),
-
-		Sidebar = color4('1E0B34', 88),
-		Separator = {
-			Background = color4('000000', 55),
-			Shadow = color4('BF5AF2', 0),
-		},
-
-		Titlebar = color4('2C1052', 100),
-		TitlebarShadow = {
-			Background = color4('000000', 0),
-			Color = value(ColorSequence.new({
-				ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
-				ColorSequenceKeypoint.new(1, Color3.fromRGB(120, 40, 180)),
-			})),
-			Transparency = value(NumberSequence.new({
-				NumberSequenceKeypoint.new(0, 0.5),
-				NumberSequenceKeypoint.new(1, 1),
-			})),
-		},
-
-		Toggle = {
-			Knob = color4('FFFFFF', 100),
-			KnobEffects = color4('EDD9FF', 100),
-			SwitchOff = color4('6B3A8A', 55),
-			SwitchOn = color4('BF5AF2', 100),
-			DepthEffect = value(ColorSequence.new({
-				ColorSequenceKeypoint.new(0, Color3.fromRGB(210, 170, 255)),
-				ColorSequenceKeypoint.new(0.68, Color3.fromRGB(230, 200, 255)),
-				ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255)),
-			})),
-		},
-
-		Slider = {
-			Track = color4('2E0F50', 100),
-			TrackEffects = color4('000000', 15),
-			TrackFill = color4('BF5AF2', 100),
-			Thumb = color4('FFFFFF', 100),
-			ThumbStroke = color4('7A18B8', 30),
-			ThumbEffects = color4('EDD9FF', 85),
-		},
-
-		Button = {
-			Shadow = value(Color3.fromRGB(30, 10, 60)),
-			FillPrimary = value(ColorSequence.new({
-				ColorSequenceKeypoint.new(0, Color3.fromRGB(174, 79, 224)),
-				ColorSequenceKeypoint.new(1, Color3.fromRGB(122, 24, 184)),
-			})),
-			FillSecondary = value(ColorSequence.new({
-				ColorSequenceKeypoint.new(0, Color3.fromRGB(55, 25, 80)),
-				ColorSequenceKeypoint.new(1, Color3.fromRGB(45, 18, 68)),
-			})),
-		},
-
-		Stepper = {
-			Background = color4('3A1260', 100),
-			Dropshadow = color4('000000', 100),
-			Separator = color4('BF5AF2', 15),
-			Filler = color4('BF5AF2', 6),
-			SegmentShadow = value(ColorSequence.new({
-				ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
-				ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0)),
-			})),
-		},
-
-		RadioButtonGroup = {
-			Background = color4('3A1260', 100),
-			Dot = color4('EDD9FF', 100),
-			Stroke = color4('7A18B8', 25),
-			Overlay = color4('BF5AF2', 10),
-			InnerShadow = color4('BF5AF2', 12),
-		},
-
-		MenuButton = {
-			IndicatorBackground = color4('BF5AF2', 14),
-			MenuBackground = color4('220D3A', 96),
-		},
-	},
-}
-
-end function __DIST.i()
-return {
-	Dark = __DIST.load('g'),
-	Light = __DIST.load('h'),
-	Amethyst = __DIST.load('g2'),
-}
-end function __DIST.j()--[[
+end function __DIST.f():typeof(__modImpl())local v=__DIST.cache.f if not v then v={c=__modImpl()}__DIST.cache.f=v end return v.c end end do local function __modImpl()--[[
 	@original dawid-script/Fluent/src/modules/Acrylic
 ]]
 
 --// Imports
 
-local services = __DIST.load('e')
-local creator = __DIST.load('d')
+local services = __DIST.e()
+local creator = __DIST.d()
 
 --// References
 local workspace = services.Workspace
@@ -4415,15 +4511,15 @@ return function(frame: GuiObject, distance: number?)
 
 	return blur
 end
-end function __DIST.k()
+end function __DIST.g():typeof(__modImpl())local v=__DIST.cache.g if not v then v={c=__modImpl()}__DIST.cache.g=v end return v.c end end do local function __modImpl()
 return {
-	UIBlur = __DIST.load('j'),
+	UIBlur = __DIST.g(),
 }
-end function __DIST.l()
+end function __DIST.h():typeof(__modImpl())local v=__DIST.cache.h if not v then v={c=__modImpl()}__DIST.cache.h=v end return v.c end end do local function __modImpl()
 return function(self)
 	--// Imports
-	local creator = __DIST.load('d')
-	local services = __DIST.load('e')
+	local creator = __DIST.d()
+	local services = __DIST.e()
 
 	--// References
 	local create = creator.Create
@@ -4432,8 +4528,7 @@ return function(self)
 
 	--// Variables
 	local structures = {}
-	
-	
+
 	--// UI
 	structures.Body = create("Frame")({
 		Name = "TextField",
@@ -4580,11 +4675,11 @@ return function(self)
 
 	return structures
 end
-end function __DIST.m()
+end function __DIST.i():typeof(__modImpl())local v=__DIST.cache.i if not v then v={c=__modImpl()}__DIST.cache.i=v end return v.c end end do local function __modImpl()
 return function(self)
 	--// Imports
-	local creator = __DIST.load('d')
-	local textField = __DIST.load('l')(self)
+	local creator = __DIST.d()
+	local textField = __DIST.i()(self)
 
 	--// References
 	local create = creator.Create
@@ -5107,10 +5202,10 @@ return function(self)
 			end
 		end
 end
-end function __DIST.n()
+end function __DIST.j():typeof(__modImpl())local v=__DIST.cache.j if not v then v={c=__modImpl()}__DIST.cache.j=v end return v.c end end do local function __modImpl()
 return function(object, minScale)
 	--// Imports
-	local creator = __DIST.load('d')
+	local creator = __DIST.d()
 
 	--// References
 	local create = creator.Create
@@ -5377,21 +5472,21 @@ return function(object, minScale)
 
 	return resizeHandler
 end
-end function __DIST.o()-- We uh
+end function __DIST.k():typeof(__modImpl())local v=__DIST.cache.k if not v then v={c=__modImpl()}__DIST.cache.k=v end return v.c end end do local function __modImpl()-- We uh
 -- We dont talk about this..
 
 
-local types = __DIST.load('b')
+local types = __DIST.b()
 
-return function(self, properties: WindowProperties__DARKLUA_TYPE_r): Window__DARKLUA_TYPE_s	--// Imports
+return function(self, properties: WindowProperties__DARKLUA_TYPE_u): Window__DARKLUA_TYPE_v	--// Imports
 	
-local effects = __DIST.load('k')
-	local services = __DIST.load('e')
-	local creator = __DIST.load('d')
-	local binder = __DIST.load('c')
+local effects = __DIST.h()
+	local services = __DIST.e()
+	local creator = __DIST.d()
+	local binder = __DIST.c()
 
-	local titleBar, addToHistory = __DIST.load('m')(self)
-	local resizeHandler = __DIST.load('n')
+	local titleBar, addToHistory = __DIST.j()(self)
+	local resizeHandler = __DIST.k()
 
 	--// References
 	local create = creator.Create
@@ -5410,7 +5505,6 @@ local effects = __DIST.load('k')
 		Position = UDim2.fromScale(0.5, 0.5),
 		Parent = parent,
 	}).__instance
-
 	local originalSize
 	local originalPosition
 	local originalPosition2
@@ -5423,11 +5517,6 @@ local effects = __DIST.load('k')
 	properties = properties or {}
 
 	properties.Size = properties.Size or UDim2.fromOffset(850, 530)
-
-	if table.find({Enum.Platform.IOS, Enum.Platform.Android}, game:GetService('UserInputService'):GetPlatform()) then 
-		properties.Size = UDim2.fromOffset(850 / 1.5, 530 / 1.5)
-	end;
-
 	properties.Maximized = properties.Maximized == true
 	properties.Minimized = properties.Minimized == true
 	properties.Searching = properties.Searching ~= false
@@ -5443,10 +5532,8 @@ local effects = __DIST.load('k')
 		create("Frame")({
 			Name = "Body",
 			BorderSizePixel = 0,
-
 			AnchorPoint = Vector2.new(0.5, 0.5),
 			Position = UDim2.fromScale(0.5, 0.5),
-
 			Parent = window,
 
 			__dynamicKeys = {
@@ -5820,7 +5907,7 @@ local effects = __DIST.load('k')
 					Size = UDim2.new(1, 0, 0, 52),
 					ZIndex = 0,
 					Text = "",
-					Modal = true,
+					Modal = false,
 				}),
 
 				create("ImageLabel")({
@@ -5842,8 +5929,6 @@ local effects = __DIST.load('k')
 			}),
 		})
 	) :: Frame
-
-
 
 	--// Initialize
 	structures.Scale = create("UIScale")({
@@ -6053,16 +6138,19 @@ local effects = __DIST.load('k')
 
 		local function toCache(page, descendants)
 			local cache = {}
+
 			for _, child in ipairs(descendants) do
 				if child:IsA("GuiObject") then
 					cache[child] = child.Visible
 				end
 			end
+			
 			pageCaches[page] = cache
 		end
 
 		local function fromCache(page, descendants)
 			local cache = pageCaches[page]
+
 			if not cache then
 				return
 			end
@@ -6075,7 +6163,10 @@ local effects = __DIST.load('k')
 		end
 
 		field:GetPropertyChangedSignal("Text"):Connect(function()
+			local matches = {}
+			local items = {}
 			local page = structures.Content:FindFirstChildOfClass("ScrollingFrame")
+			
 			if not page then
 				return
 			end
@@ -6092,9 +6183,6 @@ local effects = __DIST.load('k')
 				fromCache(page, descendants)
 				return
 			end
-
-			local matches = {}
-			local items = {}
 
 			for _, child in ipairs(descendants) do
 				if child:IsA("GuiObject") then
@@ -6230,7 +6318,6 @@ local effects = __DIST.load('k')
 			then
 				if dragging then
 					local delta = input.Position - inputPos
-
 					local newPosition = UDim2.new(
 						startPos.X.Scale,
 						startPos.X.Offset + delta.X,
@@ -6256,6 +6343,7 @@ local effects = __DIST.load('k')
 			end
 
 			local original = v.Size
+
 			v.Size = UDim2.fromOffset(0, 0)
 			v.Size = original
 		end
@@ -6266,14 +6354,14 @@ local effects = __DIST.load('k')
 
 	return object
 end
-end function __DIST.p()
-local types = __DIST.load('b')
+end function __DIST.l():typeof(__modImpl())local v=__DIST.cache.l if not v then v={c=__modImpl()}__DIST.cache.l=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
 
-return function(self, properties: SectionProperties__DARKLUA_TYPE_t): Section__DARKLUA_TYPE_u	--// Imports
+return function(self, properties: SectionProperties__DARKLUA_TYPE_w): Section__DARKLUA_TYPE_x	--// Imports
 	
-local creator = __DIST.load('d')
-	local binder = __DIST.load('c')
-	local services = __DIST.load('e')
+local creator = __DIST.d()
+	local binder = __DIST.c()
+	local services = __DIST.e()
 
 	--// References
 	local create = creator.Create
@@ -6512,20 +6600,90 @@ local creator = __DIST.load('d')
 
 	return object
 end
-end function __DIST.q()
-local types = __DIST.load('b')
+end function __DIST.m():typeof(__modImpl())local v=__DIST.cache.m if not v then v={c=__modImpl()}__DIST.cache.m=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
 
-return function(self, properties: TabProperties__DARKLUA_TYPE_v): Tab__DARKLUA_TYPE_w	--// Imports
+return function(self, properties: PageProperties__DARKLUA_TYPE_K)
+    --// Imports
+    local creator = __DIST.d()
+    local binder = __DIST.c()
+
+    --// References
+    local create = creator.Create
+
+    --// Variables
+    properties = properties or {}
+
+    local structures = {}
+
+    structures.Page = binder.Apply(
+        properties,
+        create("ScrollingFrame")({
+            Name = "ContentList",
+            AutomaticCanvasSize = Enum.AutomaticSize.Y,
+            BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+            BackgroundTransparency = 1,
+            BorderColor3 = Color3.fromRGB(0, 0, 0),
+            BorderSizePixel = 0,
+            CanvasSize = UDim2.new(),
+            ClipsDescendants = false,
+            ScrollBarImageColor3 = Color3.fromRGB(0, 0, 0),
+            ScrollBarImageTransparency = 0.6,
+            ScrollBarThickness = 7,
+            Size = UDim2.fromScale(1, 1),
+
+            create("UIListLayout")({
+                Name = "UIListLayout",
+                Padding = UDim.new(0, 9),
+                SortOrder = Enum.SortOrder.LayoutOrder,
+            }),
+
+            create("UIPadding")({
+                Name = "Margins",
+                PaddingBottom = UDim.new(0, 17),
+                PaddingLeft = UDim.new(0, 17),
+                PaddingRight = UDim.new(0, 17),
+                PaddingTop = UDim.new(0, 17),
+            }),
+        })
+    ) :: ScrollingFrame
+
+    local object = binder.Wrap(properties, {
+        Parent = function(p)
+            structures.Page.Parent = p
+        end,
+    }, structures.Page)
+
+    object.Type = "Page"
+    object.Theme = self.Theme
+    object.Structures = {
+        Page = structures.Page,
+    }
+    if self.__window then
+        object.__window = self.__window
+    end
+    object.__container = structures.Page.__instance or structures.Page
+
+    return object
+end
+end function __DIST.n():typeof(__modImpl())local v=__DIST.cache.n if not v then v={c=__modImpl()}__DIST.cache.n=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
+
+return function(self, properties: TabProperties__DARKLUA_TYPE_y): Tab__DARKLUA_TYPE_z	--// Imports
 	
-local creator = __DIST.load('d')
-	local binder = __DIST.load('c')
+local creator = __DIST.d()
+	local binder = __DIST.c()
+	local Page = __DIST.n()
 
 	--// References
 	local create = creator.Create
 	local window = self.Type == "Window" and self or self.__window
 
 	--// Variables
-	local parent = self.Type == "Window" and self.Structures.SidebarList or self.Type == "Tab" and self.__instance.Parent or self.__instance or self
+	local parent = self.Type == "Window" and self.Structures.SidebarList
+		or self.Type == "Tab" and self.__instance.Parent
+		or self.__instance
+		or self
 	local structures = {}
 
 	--// UI
@@ -6555,9 +6713,6 @@ local creator = __DIST.load('d')
 				BackgroundTransparency = self.Theme.Controls.SelectionFocused[2],
 			},
 			__contextKeys = {
-				BackgroundColor3 = function()
-					return properties.Selected and self.Theme.Controls.SelectionFocused[1].Value or 1
-				end,
 				BackgroundTransparency = function()
 					return properties.Selected and self.Theme.Controls.SelectionFocused[2].Value or 1
 				end,
@@ -6679,34 +6834,55 @@ local creator = __DIST.load('d')
 	structures.Title = structures.Leading:FindFirstChild("Title") :: TextLabel
 	structures.Symbol = structures.Leading:FindFirstChild("Symbol") :: ImageLabel
 	structures.Padding = structures.Body:FindFirstChild("UIPadding") :: UIPadding
-	structures.Page = create("ScrollingFrame")({
-		Name = "ContentList",
-		AutomaticCanvasSize = Enum.AutomaticSize.Y,
-		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-		BackgroundTransparency = 1,
-		BorderColor3 = Color3.fromRGB(0, 0, 0),
-		BorderSizePixel = 0,
-		CanvasSize = UDim2.new(),
-		ClipsDescendants = false,
-		ScrollBarImageColor3 = Color3.fromRGB(0, 0, 0),
-		ScrollBarImageTransparency = 0.6,
-		ScrollBarThickness = 7,
-		Size = UDim2.fromScale(1, 1),
 
-		create("UIListLayout")({
-			Name = "UIListLayout",
-			Padding = UDim.new(0, 9),
-			SortOrder = Enum.SortOrder.LayoutOrder,
-		}),
+	local pageComponent = nil
 
-		create("UIPadding")({
-			Name = "Margins",
-			PaddingBottom = UDim.new(0, 17),
-			PaddingLeft = UDim.new(0, 17),
-			PaddingRight = UDim.new(0, 17),
-			PaddingTop = UDim.new(0, 17),
-		}),
-	}) :: ScrollingFrame
+	if properties and properties.Page then
+		if type(properties.Page) == "table" and properties.Page.Type == "Page" then
+			pageComponent = properties.Page
+			structures.Page = pageComponent.Structures.Page
+		else
+			structures.Page = properties.Page
+		end
+	else
+		pageComponent = Page(self, properties and properties.PageProperties)
+		structures.Page = pageComponent.Structures.Page
+	end
+
+	structures.Page = structures.Page
+		or (function()
+			return binder.Apply(
+				properties,
+				create("ScrollingFrame")({
+					Name = "ContentList",
+					AutomaticCanvasSize = Enum.AutomaticSize.Y,
+					BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+					BackgroundTransparency = 1,
+					BorderColor3 = Color3.fromRGB(0, 0, 0),
+					BorderSizePixel = 0,
+					CanvasSize = UDim2.new(),
+					ClipsDescendants = false,
+					ScrollBarImageColor3 = Color3.fromRGB(0, 0, 0),
+					ScrollBarImageTransparency = 0.6,
+					ScrollBarThickness = 7,
+					Size = UDim2.fromScale(1, 1),
+
+					create("UIListLayout")({
+						Name = "UIListLayout",
+						Padding = UDim.new(0, 9),
+						SortOrder = Enum.SortOrder.LayoutOrder,
+					}),
+
+					create("UIPadding")({
+						Name = "Margins",
+						PaddingBottom = UDim.new(0, 17),
+						PaddingLeft = UDim.new(0, 17),
+						PaddingRight = UDim.new(0, 17),
+						PaddingTop = UDim.new(0, 17),
+					}),
+				})
+			) :: ScrollingFrame
+		end)()
 
 	local object = binder.Wrap(properties, {
 		Title = function(name: string)
@@ -6714,7 +6890,6 @@ local creator = __DIST.load('d')
 		end,
 		Icon = function(icon: string?)
 			structures.Symbol.Visible = icon and true or false
-
 			if icon then
 				structures.Symbol.Image = icon
 			end
@@ -6739,10 +6914,30 @@ local creator = __DIST.load('d')
 		end,
 	}, structures.Body)
 
+	object.Navigate = function(self, targetPage: Page__DARKLUA_TYPE_L)
+		if not targetPage or type(targetPage) ~= "table" or targetPage.Type ~= "Page" then
+			warn("Tab:Navigate expects a Page component.")
+			return
+		end
+
+		local newPageStructure = targetPage.Structures.Page
+
+		if object.Selected and window and window.__container then
+			if structures.Page then
+				structures.Page.Parent = nil
+			end
+			newPageStructure.Parent = window.__container
+		end
+
+		structures.Page = newPageStructure
+
+		pageComponent = targetPage
+	end
+
 	object.Type = "Tab"
 	object.Theme = self.Theme
 	object.Structures = structures
-	object.__container = structures.Page.__instance
+	object.__container = structures.Page.__instance or structures.Page
 	object.__window = self.__window
 
 	binder.Apply(properties, object)
@@ -6759,7 +6954,7 @@ local creator = __DIST.load('d')
 				return
 			end
 
-			for _, tab: Tab__DARKLUA_TYPE_w in pairs(window.Tabs) do
+			for _, tab: Tab__DARKLUA_TYPE_z in pairs(window.Tabs) do
 				tab.Selected = false
 			end
 
@@ -6775,10 +6970,10 @@ local creator = __DIST.load('d')
 
 	return object
 end
-end function __DIST.r()
+end function __DIST.o():typeof(__modImpl())local v=__DIST.cache.o if not v then v={c=__modImpl()}__DIST.cache.o=v end return v.c end end do local function __modImpl()
 return function(self)
 	--// Imports
-	local creator = __DIST.load('d')
+	local creator = __DIST.d()
 
 	--// References
 	local create = creator.Create
@@ -6862,15 +7057,15 @@ return function(self)
 
 	return structures
 end
-end function __DIST.s()
-local types = __DIST.load('b')
+end function __DIST.p():typeof(__modImpl())local v=__DIST.cache.p if not v then v={c=__modImpl()}__DIST.cache.p=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
 
-return function(self, properties: PageSectionProperties__DARKLUA_TYPE_F): PageSection__DARKLUA_TYPE_G	--// Imports
+return function(self, properties: PageSectionProperties__DARKLUA_TYPE_I): PageSection__DARKLUA_TYPE_J	--// Imports
 	
-local creator = __DIST.load('d')
-	local binder = __DIST.load('c')
+local creator = __DIST.d()
+	local binder = __DIST.c()
 
-	local titleStack = __DIST.load('r')
+	local titleStack = __DIST.p()
 
 	--// References
 	local create = creator.Create
@@ -6944,13 +7139,13 @@ local creator = __DIST.load('d')
 
 	return object
 end
-end function __DIST.t()
-local types = __DIST.load('b')
+end function __DIST.q():typeof(__modImpl())local v=__DIST.cache.q if not v then v={c=__modImpl()}__DIST.cache.q=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
 
-return function(self, properties: Frame__DARKLUA_TYPE_g): Form__DARKLUA_TYPE_y	--// Imports
+return function(self, properties: Frame__DARKLUA_TYPE_g): Form__DARKLUA_TYPE_B	--// Imports
 	
-local creator = __DIST.load('d')
-	local binder = __DIST.load('c')
+local creator = __DIST.d()
+	local binder = __DIST.c()
 
 	--// References
 	local create = creator.Create
@@ -7045,13 +7240,13 @@ local creator = __DIST.load('d')
 
 	return object
 end
-end function __DIST.u()
-local types = __DIST.load('b')
+end function __DIST.r():typeof(__modImpl())local v=__DIST.cache.r if not v then v={c=__modImpl()}__DIST.cache.r=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
 
-return function(self, properties: RowProperties__DARKLUA_TYPE_z): Row__DARKLUA_TYPE_A	--// Imports
+return function(self, properties: RowProperties__DARKLUA_TYPE_C): Row__DARKLUA_TYPE_D	--// Imports
 	
-local creator = __DIST.load('d')
-	local binder = __DIST.load('c')
+local creator = __DIST.d()
+	local binder = __DIST.c()
 
 	--// References
 	local create = creator.Create
@@ -7203,13 +7398,13 @@ local creator = __DIST.load('d')
 
 	return object
 end
-end function __DIST.v()
-local types = __DIST.load('b')
+end function __DIST.s():typeof(__modImpl())local v=__DIST.cache.s if not v then v={c=__modImpl()}__DIST.cache.s=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
 
-return function(self, properties: StackProperties__DARKLUA_TYPE_B): Stack__DARKLUA_TYPE_C	--// Imports
+return function(self, properties: StackProperties__DARKLUA_TYPE_E): Stack__DARKLUA_TYPE_F	--// Imports
 	
-local creator = __DIST.load('d')
-	local binder = __DIST.load('c')
+local creator = __DIST.d()
+	local binder = __DIST.c()
 
 	--// References
 	local create = creator.Create
@@ -7264,13 +7459,13 @@ local creator = __DIST.load('d')
 
 	return object
 end
-end function __DIST.w()
-local types = __DIST.load('b')
+end function __DIST.t():typeof(__modImpl())local v=__DIST.cache.t if not v then v={c=__modImpl()}__DIST.cache.t=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
 
-return function(self, properties: StackProperties__DARKLUA_TYPE_B): Stack__DARKLUA_TYPE_C	--// Imports
+return function(self, properties: StackProperties__DARKLUA_TYPE_E): Stack__DARKLUA_TYPE_F	--// Imports
 	
-local creator = __DIST.load('d')
-	local binder = __DIST.load('c')
+local creator = __DIST.d()
+	local binder = __DIST.c()
 
 	--// References
 	local create = creator.Create
@@ -7325,14 +7520,14 @@ local creator = __DIST.load('d')
 
 	return object
 end
-end function __DIST.x()
-local types = __DIST.load('b')
+end function __DIST.u():typeof(__modImpl())local v=__DIST.cache.u if not v then v={c=__modImpl()}__DIST.cache.u=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
 
-return function(self, properties: TitleStackProperties__DARKLUA_TYPE_D): TitleStack__DARKLUA_TYPE_E	--// Imports
+return function(self, properties: TitleStackProperties__DARKLUA_TYPE_G): TitleStack__DARKLUA_TYPE_H	--// Imports
 	
-local binder = __DIST.load('c')
+local binder = __DIST.c()
 
-	local titleStack = __DIST.load('r')
+	local titleStack = __DIST.p()
 
 	--// Variables
 	local structures = titleStack(self)
@@ -7362,13 +7557,13 @@ local binder = __DIST.load('c')
 
 	return object
 end
-end function __DIST.y()
-local types = __DIST.load('b')
+end function __DIST.v():typeof(__modImpl())local v=__DIST.cache.v if not v then v={c=__modImpl()}__DIST.cache.v=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
 
-return function(self, properties: LabelProperties__DARKLUA_TYPE_H): Label__DARKLUA_TYPE_I	--// Imports
+return function(self, properties: LabelProperties__DARKLUA_TYPE_M): Label__DARKLUA_TYPE_N	--// Imports
 	
-local creator = __DIST.load('d')
-	local binder = __DIST.load('c')
+local creator = __DIST.d()
+	local binder = __DIST.c()
 
 	--// References
 	local create = creator.Create
@@ -7412,13 +7607,13 @@ local creator = __DIST.load('d')
 
 	return object
 end
-end function __DIST.z()
-local types = __DIST.load('b')
+end function __DIST.w():typeof(__modImpl())local v=__DIST.cache.w if not v then v={c=__modImpl()}__DIST.cache.w=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
 
-return function(self, properties: SymbolProperties__DARKLUA_TYPE_J): Symbol__DARKLUA_TYPE_K	--// Imports
+return function(self, properties: SymbolProperties__DARKLUA_TYPE_O): Symbol__DARKLUA_TYPE_P	--// Imports
 	
-local creator = __DIST.load('d')
-	local binder = __DIST.load('c')
+local creator = __DIST.d()
+	local binder = __DIST.c()
 
 	--// References
 	local create = creator.Create
@@ -7477,14 +7672,14 @@ local creator = __DIST.load('d')
 
 	return object
 end
-end function __DIST.A()
-local types = __DIST.load('b')
+end function __DIST.x():typeof(__modImpl())local v=__DIST.cache.x if not v then v={c=__modImpl()}__DIST.cache.x=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
 
-return function(self, properties: ToggleProperties__DARKLUA_TYPE_L): Row__DARKLUA_TYPE_A	--// Imports
+return function(self, properties: ToggleProperties__DARKLUA_TYPE_Q): Row__DARKLUA_TYPE_D	--// Imports
 	
-local creator = __DIST.load('d')
-	local binder = __DIST.load('c')
-	local services = __DIST.load('e')
+local creator = __DIST.d()
+	local binder = __DIST.c()
+	local services = __DIST.e()
 
 	--// References
 	local create = creator.Create
@@ -7631,15 +7826,15 @@ local creator = __DIST.load('d')
 
 	return object
 end
-end function __DIST.B()
-local types = __DIST.load('b')
+end function __DIST.y():typeof(__modImpl())local v=__DIST.cache.y if not v then v={c=__modImpl()}__DIST.cache.y=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
 
-return function(self, properties: TextFieldProperties__DARKLUA_TYPE_N): TextField__DARKLUA_TYPE_O	--// Imports
+return function(self, properties: TextFieldProperties__DARKLUA_TYPE_S): TextField__DARKLUA_TYPE_T	--// Imports
 	
-local binder = __DIST.load('c')
+local binder = __DIST.c()
 
 	--// Variables
-	local structures = __DIST.load('l')(self)
+	local structures = __DIST.i()(self)
 
 	--// UI
 	properties = properties or {}
@@ -7692,19 +7887,19 @@ local binder = __DIST.load('c')
 
 	return object
 end
-end function __DIST.C()
-local types = __DIST.load('b')
+end function __DIST.z():typeof(__modImpl())local v=__DIST.cache.z if not v then v={c=__modImpl()}__DIST.cache.z=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
 
-return function(self, properties: KeybindFieldProperties__DARKLUA_TYPE_P): KeybindFieldProperties__DARKLUA_TYPE_P	--// Imports
+return function(self, properties: KeybindFieldProperties__DARKLUA_TYPE_U): KeybindFieldProperties__DARKLUA_TYPE_U	--// Imports
 	
-local binder = __DIST.load('c')
-	local services = __DIST.load('e')
+local binder = __DIST.c()
+	local services = __DIST.e()
 
 	--// References
 	local userInputService = services.UserInputService
 
 	--// Variables
-	local structures = __DIST.load('l')(self)
+	local structures = __DIST.i()(self)
 
 	--// UI
 	properties = properties or {}
@@ -7765,13 +7960,13 @@ local binder = __DIST.load('c')
 
 	return object
 end
-end function __DIST.D()
-local types = __DIST.load('b')
+end function __DIST.A():typeof(__modImpl())local v=__DIST.cache.A if not v then v={c=__modImpl()}__DIST.cache.A=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
 
-return function(self, properties: SliderProperties__DARKLUA_TYPE_R): Slider__DARKLUA_TYPE_S	--// Imports
+return function(self, properties: SliderProperties__DARKLUA_TYPE_W): Slider__DARKLUA_TYPE_X	--// Imports
 	
-local creator = __DIST.load('d')
-	local binder = __DIST.load('c')
+local creator = __DIST.d()
+	local binder = __DIST.c()
 
 	--// References
 	local create = creator.Create
@@ -7993,14 +8188,14 @@ local creator = __DIST.load('d')
 
 	return object
 end
-end function __DIST.E()
-local types = __DIST.load('b')
+end function __DIST.B():typeof(__modImpl())local v=__DIST.cache.B if not v then v={c=__modImpl()}__DIST.cache.B=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
 
-return function(self, properties: ButtonProperties__DARKLUA_TYPE_T): Button__DARKLUA_TYPE_U	--// Imports
+return function(self, properties: ButtonProperties__DARKLUA_TYPE_Y): Button__DARKLUA_TYPE_Z	--// Imports
 	
-local creator = __DIST.load('d')
-	local binder = __DIST.load('c')
-	local services = __DIST.load('e')
+local creator = __DIST.d()
+	local binder = __DIST.c()
+	local services = __DIST.e()
 
 	--// References
 	local create = creator.Create
@@ -8088,10 +8283,29 @@ local creator = __DIST.load('d')
 					}),
 				}),
 			}),
+
+			create("Folder")({
+				Name = "PressOverlay",
+
+				create("Frame")({
+					Name = "Overlay",
+					BackgroundColor3 = Color3.fromRGB(0, 0, 0),
+					BackgroundTransparency = 1,
+					BorderSizePixel = 0,
+					Size = UDim2.fromScale(1, 1),
+					ZIndex = 0,
+
+					create("UICorner")({
+						Name = "UICorner",
+						CornerRadius = UDim.new(0, 5),
+					}),
+				}),
+			}),
 		})
 	) :: TextButton
 
 	--// Initialize
+	structures.PressOverlay = structures.Body:FindFirstChild("PressOverlay"):FindFirstChild("Overlay")
 	structures.Shadows = structures.Body:FindFirstChild("ShadowLayers")
 	structures.Shadow1 = structures.Shadows:FindFirstChild("Layer1"):FindFirstChild("UIStroke")
 	structures.Shadow2 = structures.Shadows:FindFirstChild("Layer2"):FindFirstChild("UIStroke")
@@ -8188,67 +8402,42 @@ local creator = __DIST.load('d')
 		end
 	end)
 
+	local function animateRelease()
+		local tweenInfo = TweenInfo.new(0.12, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
+
+		tweenService
+			:Create(structures.PressOverlay, tweenInfo, {
+				BackgroundTransparency = 1,
+			})
+			:Play()
+	end
+
 	structures.Body.MouseButton1Down:Connect(function()
 		local tweenInfo = TweenInfo.new(0.08, Enum.EasingStyle.Cubic, Enum.EasingDirection.Out)
 
 		tweenService
-			:Create(structures.Shadow1, tweenInfo, {
-				Transparency = 0.8,
-			})
-			:Play()
-
-		tweenService
-			:Create(structures.Shadow2, tweenInfo, {
-				Transparency = 0.9,
+			:Create(structures.PressOverlay, tweenInfo, {
+				BackgroundTransparency = 0.8,
 			})
 			:Play()
 	end)
 
-	structures.Body.MouseButton1Up:Connect(function()
-		local tweenInfo = TweenInfo.new(0.12, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
-
-		tweenService
-			:Create(structures.Shadow1, tweenInfo, {
-				Transparency = 0.95,
-			})
-			:Play()
-
-		tweenService
-			:Create(structures.Shadow2, tweenInfo, {
-				Transparency = 0.98,
-			})
-			:Play()
-	end)
-
-	structures.Body.MouseLeave:Connect(function()
-		local tweenInfo = TweenInfo.new(0.12, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
-
-		tweenService
-			:Create(structures.Shadow1, tweenInfo, {
-				Transparency = 0.95,
-			})
-			:Play()
-
-		tweenService
-			:Create(structures.Shadow2, tweenInfo, {
-				Transparency = 0.98,
-			})
-			:Play()
-	end)
+	structures.Body.MouseButton1Up:Connect(animateRelease)
+	structures.Body.MouseLeave:Connect(animateRelease)
 
 	binder.Apply(properties, object)
 
 	return object
 end
-end function __DIST.F()
-local types = __DIST.load('b')
+end function __DIST.C():typeof(__modImpl())local v=__DIST.cache.C if not v then v={c=__modImpl()}__DIST.cache.C=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
 
-return function(self, properties: StepperProperties__DARKLUA_TYPE_V): Stepper__DARKLUA_TYPE_W	--// Imports
+return function(self, properties: StepperProperties__DARKLUA_TYPE__): Stepper__DARKLUA_TYPE_0	--// Imports
 	
-local creator = __DIST.load('d')
-	local binder = __DIST.load('c')
+local creator = __DIST.d()
+	local binder = __DIST.c()
 
-	local textField = __DIST.load('l')
+	local textField = __DIST.i()
 	--// References
 	
 local create = creator.Create
@@ -8608,7 +8797,7 @@ local create = creator.Create
 	end)
 
 	structures.IMinus.MouseButton1Down:Connect(function()
-		object.Decrement() -- Execute once on click/down
+		object.Decrement()
 		stepStart("Down")
 	end)
 	structures.IMinus.MouseButton1Up:Connect(function()
@@ -8630,12 +8819,6 @@ local create = creator.Create
 			stepConnections = {}
 		end
 	end)
-
-	-- Change end
-
-	-- Removed MouseButton1Click connections as MouseButton1Down now handles the initial click
-	-- structures.IPlus.MouseButton1Click:Connect(object.Increment)
-	-- structures.IMinus.MouseButton1Click:Connect(object.Decrement)
 
 	structures.Field.Field.FocusLost:Connect(function(fromEnter)
 		if fromEnter then
@@ -8661,13 +8844,13 @@ local create = creator.Create
 
 	return object
 end
-end function __DIST.G()
-local types = __DIST.load('b')
+end function __DIST.D():typeof(__modImpl())local v=__DIST.cache.D if not v then v={c=__modImpl()}__DIST.cache.D=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
 
-return function(self, properties: RadioButtonGroupProperties__DARKLUA_TYPE_X): RadioButtonGroup__DARKLUA_TYPE_Y	--// Imports
+return function(self, properties: RadioButtonGroupProperties__DARKLUA_TYPE_1): RadioButtonGroup__DARKLUA_TYPE_2	--// Imports
 	
-local creator = __DIST.load('d')
-	local binder = __DIST.load('c')
+local creator = __DIST.d()
+	local binder = __DIST.c()
 
 	--// References
 	local create = creator.Create
@@ -8963,14 +9146,14 @@ local creator = __DIST.load('d')
 
 	return object
 end
-end function __DIST.H()
-local types = __DIST.load('b')
+end function __DIST.E():typeof(__modImpl())local v=__DIST.cache.E if not v then v={c=__modImpl()}__DIST.cache.E=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
 
-return function(self, properties: PopUpButtonProperties__DARKLUA_TYPE_Z): PopUpButton__DARKLUA_TYPE__	--// Imports
+return function(self, properties: PopUpButtonProperties__DARKLUA_TYPE_3): PopUpButton__DARKLUA_TYPE_4	--// Imports
 	
-local creator = __DIST.load('d')
-	local binder = __DIST.load('c')
-	local services = __DIST.load('e')
+local creator = __DIST.d()
+	local binder = __DIST.c()
+	local services = __DIST.e()
 
 	--// References
 	local create = creator.Create
@@ -9026,7 +9209,15 @@ local creator = __DIST.load('d')
 		local menuSize = menu.AbsoluteSize
 		local viewportSize = camera.ViewportSize
 
-		local desiredX = bodyPos.X + HORIZONTAL_OFFSET
+		local desiredX
+		if properties.Maximum and properties.Maximum > 1 then
+			local anchorElement = structures.PopUpIndicator or body
+			local anchorPos = anchorElement.AbsolutePosition
+			desiredX = anchorPos.X + HORIZONTAL_OFFSET
+		else
+			desiredX = bodyPos.X + HORIZONTAL_OFFSET
+		end
+		
 		local desiredY = bodyPos.Y + bodySize.Y + VERTICAL_PADDING
 		local maxX = math.max(EDGE_BUFFER, viewportSize.X - EDGE_BUFFER - menuSize.X)
 		local maxY = math.max(EDGE_BUFFER, viewportSize.Y - EDGE_BUFFER - menuSize.Y)
@@ -9038,19 +9229,31 @@ local creator = __DIST.load('d')
 	end
 
 	local function option(object, name, index)
-		local option = create("TextButton")({
+		local option = nil
+		option = create("TextButton")({
 			Name = "Item",
 			Size = UDim2.fromScale(1, 0),
 			AutoButtonColor = false,
 			AutomaticSize = Enum.AutomaticSize.XY,
-			BackgroundColor3 = Color3.fromRGB(0, 122, 255),
-			BackgroundTransparency = 1,
 			BorderColor3 = Color3.fromRGB(0, 0, 0),
 			BorderSizePixel = 0,
 			Selectable = false,
 			Text = "",
 			LayoutOrder = index,
 			Parent = structures.Menu,
+
+			__dynamicKeys = {
+				BackgroundColor3 = self.Theme.Controls.SelectionFocused[1],
+				BackgroundTransparency = self.Theme.Controls.SelectionFocused[2],
+			},
+			__contextKeys = {
+				BackgroundTransparency = function()
+					if not option then
+						return
+					end
+					return option.GuiState == Enum.GuiState.Hover and self.Theme.Controls.SelectionFocused[2].Value or 1
+				end,
+			},
 
 			create("UIPadding")({
 				Name = "UIPadding",
@@ -9154,16 +9357,46 @@ local creator = __DIST.load('d')
 
 		option.MouseButton1Click:Connect(function()
 			if object then
-				object.Expanded = false
-				task.wait(0.2)
-				object.Value = index
+				if object.Maximum and object.Maximum > 1 then
+					local current = object.Value or {}
+					if typeof(current) ~= "table" then
+						current = current and { current } or {}
+					end
+
+					local foundIndex = nil
+					for i, v in ipairs(current) do
+						if v == index then
+							foundIndex = i
+							break
+						end
+					end
+
+					if foundIndex then
+						table.remove(current, foundIndex)
+					else
+						if #current < object.Maximum then
+							table.insert(current, index)
+						else
+							table.remove(current, 1)
+							table.insert(current, index)
+						end
+					end
+
+					object.Value = current
+				else
+					object.Expanded = false
+					task.wait(0.2)
+					object.Value = index
+				end
 			end
 		end)
 	end
 
 	--// UI
 	properties = properties or {}
+	properties.Maximum = properties.Maximum or 1
 	properties.Expanded = properties.Expanded or false
+	properties.Options = properties.Options or {}
 
 	structures.Body = binder.Apply(
 		properties,
@@ -9269,119 +9502,52 @@ local creator = __DIST.load('d')
 			BackgroundTransparency = 1,
 			Size = UDim2.fromScale(1, 1),
 
-			create("Frame")({
-				Name = "PopUpMenuWrapper",
-				AutomaticSize = Enum.AutomaticSize.XY,
+			create("ScrollingFrame")({
+				Name = "PopUpMenu",
+				AutomaticSize = Enum.AutomaticSize.X,
+				BorderColor3 = Color3.fromRGB(0, 0, 0),
 				BorderSizePixel = 0,
+				AutomaticCanvasSize = Enum.AutomaticSize.Y,
+				CanvasSize = UDim2.new(),
+				ScrollBarImageColor3 = Color3.fromRGB(0, 0, 0),
+				ScrollBarImageTransparency = 0.5,
+				ScrollBarThickness = 3,
 
 				__dynamicKeys = {
 					BackgroundColor3 = theme.MenuBackground[1],
 					BackgroundTransparency = theme.MenuBackground[2],
 				},
 
-				create("UICorner")({ CornerRadius = UDim.new(0, 6) }),
+				create("UICorner")({
+					Name = "UICorner",
+					CornerRadius = UDim.new(0, 6),
+				}),
+
 				create("UIStroke")({
+					Name = "UIStroke",
 					ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
 					Transparency = 0.9,
 				}),
+
+				create("UIPadding")({
+					Name = "UIPadding",
+					PaddingBottom = UDim.new(0, 5),
+					PaddingLeft = UDim.new(0, 5),
+					PaddingRight = UDim.new(0, 5),
+					PaddingTop = UDim.new(0, 5),
+				}),
+
 				create("UIListLayout")({
-					Name = "WrapperLayout",
+					Name = "UIListLayout",
 					SortOrder = Enum.SortOrder.LayoutOrder,
+					Padding = UDim.new(0, 1),
 				}),
-
-				-- search bar (Searchable = true)
-				create("Frame")({
-					Name = "SearchBar",
-					AutomaticSize = Enum.AutomaticSize.Y,
-					BackgroundTransparency = 1,
-					BorderSizePixel = 0,
-					LayoutOrder = 0,
-					Size = UDim2.new(1, 0, 0, 0),
-					Visible = false,
-
-					create("UIPadding")({
-						PaddingBottom = UDim.new(0, 3),
-						PaddingLeft = UDim.new(0, 6),
-						PaddingRight = UDim.new(0, 6),
-						PaddingTop = UDim.new(0, 6),
-					}),
-
-					create("TextBox")({
-						Name = "SearchInput",
-						BackgroundTransparency = 0.88,
-						BorderSizePixel = 0,
-						ClearTextOnFocus = false,
-						FontFace = Font.new("rbxassetid://12187365364"),
-						PlaceholderText = "Search...",
-						Text = "",
-						TextSize = 13,
-						TextXAlignment = Enum.TextXAlignment.Left,
-						Size = UDim2.new(1, 0, 0, 26),
-
-						__dynamicKeys = {
-							BackgroundColor3 = self.Theme.Controls.View[1],
-							TextColor3 = self.Theme.Text.Primary[1],
-							PlaceholderColor3 = self.Theme.Text.Secondary[1],
-						},
-
-						create("UICorner")({ CornerRadius = UDim.new(0, 5) }),
-						create("UIPadding")({
-							PaddingLeft = UDim.new(0, 8),
-							PaddingRight = UDim.new(0, 8),
-						}),
-					}),
-				}),
-
-				create("ScrollingFrame")({
-					Name = "PopUpMenu",
-					AutomaticSize = Enum.AutomaticSize.X,
-					BackgroundTransparency = 1,
-					BorderSizePixel = 0,
-					AutomaticCanvasSize = Enum.AutomaticSize.Y,
-					CanvasSize = UDim2.new(),
-					LayoutOrder = 1,
-					ScrollBarImageColor3 = Color3.fromRGB(0, 0, 0),
-					ScrollBarImageTransparency = 0.5,
-					ScrollBarThickness = 3,
-
-					create("UIPadding")({  
-						Name = "UIPadding",
-						PaddingBottom = UDim.new(0, 5),
-						PaddingLeft = UDim.new(0, 5),
-						PaddingRight = UDim.new(0, 5),
-						PaddingTop = UDim.new(0, 3),
-					}),
-
-					create("UIListLayout")({  
-						Name = "UIListLayout",
-						SortOrder = Enum.SortOrder.LayoutOrder,
-						Padding = UDim.new(0, 1),
-					}),
-					}),
+			}),
 		}),
 	}) :: ScreenGui
 
 	structures.MenuBody = structures.MenuContainer:FindFirstChild("MenuBody") :: CanvasGroup
-	local popUpWrapper = structures.MenuBody:FindFirstChild("PopUpMenuWrapper")
-	structures.SearchBar = popUpWrapper and popUpWrapper:FindFirstChild("SearchBar")
-	structures.Menu = popUpWrapper and popUpWrapper:FindFirstChild("PopUpMenu") or structures.MenuBody:FindFirstChild("PopUpMenu") :: ScrollingFrame
-
-	-- search logic
-	if properties.Searchable and structures.SearchBar then
-		structures.SearchBar.Visible = true
-		local searchInput = structures.SearchBar:FindFirstChild("SearchInput")
-		if searchInput then
-			searchInput:GetPropertyChangedSignal("Text"):Connect(function()
-				local query = string.lower(searchInput.Text)
-				for _, opt in ipairs(structures.Options) do
-					local lbl = opt:FindFirstChild("Label")
-					if lbl then
-						opt.Visible = query == "" or string.find(string.lower(lbl.Text), query, 1, true) ~= nil
-					end
-				end
-			end)
-		end
-	end
+	structures.Menu = structures.MenuBody:FindFirstChild("PopUpMenu") :: ScrollingFrame
 
 	local object
 	local bindings = {
@@ -9401,12 +9567,6 @@ local creator = __DIST.load('d')
 
 			if expand then
 				structures.MenuContainer.Parent = structures.Body.__instance
-				-- reset search when opening
-				if properties.Searchable and structures.SearchBar then
-					local si = structures.SearchBar:FindFirstChild("SearchInput")
-					if si then si.Text = "" end
-					for _, opt in ipairs(structures.Options) do opt.Visible = true end
-				end
 			end
 
 			anchor()
@@ -9423,25 +9583,69 @@ local creator = __DIST.load('d')
 			end)
 		end,
 
-		Value = function(value: number)
-			structures.CurrentTab.Text = structures.Options[value]:FindFirstChild("Label").Text
+		Value = function(value)
+			local isMulti = object and object.Maximum and object.Maximum > 1
 
-			for index, option in ipairs(structures.Options) do
-				local currentIndex = index == value
-
-				if not option or not option:FindFirstChild("Checkmark") then
-					continue
+			if isMulti then
+				local selMap = {}
+				if typeof(value) == "table" then
+					for _, v in ipairs(value) do
+						selMap[v] = true
+					end
+				elseif value then
+					selMap[value] = true
 				end
 
-				if not currentIndex then
-					option:FindFirstChild("Checkmark").Visible = false
-					option:FindFirstChild("CheckmarkRepl").Visible = true -- Scuffed way to do this but 🤷‍♂️
+				local labels = {}
+				for idx, opt in ipairs(structures.Options) do
+					if selMap[idx] and opt and opt:FindFirstChild("Label") then
+						table.insert(labels, opt:FindFirstChild("Label").Text)
+					end
+				end
+
+				if #labels == 0 then
+					structures.CurrentTab.Text = "None"
 				else
-					option:FindFirstChild("CheckmarkRepl").Visible = false
-					if not value then
-						option:FindFirstChild("Checkmark").Visible = false
-					else
+					structures.CurrentTab.Text = table.concat(labels, ", ")
+				end
+
+				for index, option in ipairs(structures.Options) do
+					if not option or not option:FindFirstChild("Checkmark") then
+						continue
+					end
+
+					if selMap[index] then
 						option:FindFirstChild("Checkmark").Visible = true
+						option:FindFirstChild("CheckmarkRepl").Visible = false
+					else
+						option:FindFirstChild("Checkmark").Visible = false
+						option:FindFirstChild("CheckmarkRepl").Visible = true
+					end
+				end
+			else
+				if not value or not structures.Options[value] then
+					structures.CurrentTab.Text = "None"
+				else
+					structures.CurrentTab.Text = structures.Options[value]:FindFirstChild("Label").Text
+				end
+
+				for index, option in ipairs(structures.Options) do
+					local currentIndex = index == value
+
+					if not option or not option:FindFirstChild("Checkmark") then
+						continue
+					end
+
+					if not currentIndex then
+						option:FindFirstChild("Checkmark").Visible = false
+						option:FindFirstChild("CheckmarkRepl").Visible = true -- Scuffed way to do this but 🤷‍♂️
+					else
+						option:FindFirstChild("CheckmarkRepl").Visible = false
+						if not value then
+							option:FindFirstChild("Checkmark").Visible = false
+						else
+							option:FindFirstChild("Checkmark").Visible = true
+						end
 					end
 				end
 			end
@@ -9514,31 +9718,17 @@ local creator = __DIST.load('d')
 
 	return object
 end
-end function __DIST.I()
-local types = __DIST.load('b')
+end function __DIST.F():typeof(__modImpl())local v=__DIST.cache.F if not v then v={c=__modImpl()}__DIST.cache.F=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
 
-return function(self, properties: PullDownButtonProperties__DARKLUA_TYPE_0): PullDownButton__DARKLUA_TYPE_1	--// Imports
+return function(self, properties: PullDownButtonProperties__DARKLUA_TYPE_5): PullDownButton__DARKLUA_TYPE_6	--// Imports
 	
-local creator = __DIST.load('d')
-	local binder = __DIST.load('c')
-	local services = __DIST.load('e')
+local creator = __DIST.d()
+	local binder = __DIST.c()
+	local services = __DIST.e()
 
 	--// References
 	local create = creator.Create
-
-	local multi = properties.Multi
-	local selectedValues = {};
-
-	if multi and properties.Value and type(properties.Value) == 'table' then 
-
-		for int, val in next, properties.Value do 
-			table.insert(selectedValues, val);
-		end;
-	end;
-
-	if not properties.Label then 
-		properties.Label = '';
-	end;
 
 	local userInputService = services.UserInputService
 	local tweenService = services.TweenService
@@ -9585,52 +9775,32 @@ local creator = __DIST.load('d')
 		menu.Position = UDim2.new(0, desiredX, 0, desiredY)
 	end
 
-	local backup = {}
-
-	local function updateHover(option, label, mode) 
-
-		if not mode then 
-			option.BackgroundTransparency = 1
-
-			label.TextColor3 = self.Theme.Text.Primary[1].Value
-			label.TextTransparency = self.Theme.Text.Primary[2].Value
-
-			return;
-		end;
-
-		option.BackgroundTransparency = self.Theme.Controls.SelectionFocused[2].Value
-
-		label.TextColor3 = self.Theme.Controls.SelectionFocusedAccent[1].Value
-		label.TextTransparency = self.Theme.Controls.SelectionFocusedAccent[2].Value
-	end;
-
-	local function update_structures()
-		if not structures or not structures.CurrentTab then 
-			return;
-		end;
-
-		if not selectedValues[1] then 
-			structures.CurrentTab.Text = '';
-			return;
-		end;
-
-		structures.CurrentTab.Text = selectedValues[1]..',';
-	end;
-
 	local function option(object, name, index)
-		local option = create("TextButton")({
+		local option = nil
+		option = create("TextButton")({
 			Name = "Item",
 			Size = UDim2.fromScale(1, 0),
 			AutoButtonColor = false,
 			AutomaticSize = Enum.AutomaticSize.XY,
-			BackgroundColor3 = Color3.fromRGB(0, 122, 255),
-			BackgroundTransparency = 1,
 			BorderColor3 = Color3.fromRGB(0, 0, 0),
 			BorderSizePixel = 0,
 			Selectable = false,
 			Text = "",
 			LayoutOrder = index,
 			Parent = structures.Menu,
+
+			__dynamicKeys = {
+				BackgroundColor3 = self.Theme.Controls.SelectionFocused[1],
+				BackgroundTransparency = self.Theme.Controls.SelectionFocused[2],
+			},
+			__contextKeys = {
+				BackgroundTransparency = function()
+					if not option then
+						return
+					end
+					return option.GuiState == Enum.GuiState.Hover and self.Theme.Controls.SelectionFocused[2].Value or 1
+				end,
+			},
 
 			create("UIPadding")({
 				Name = "UIPadding",
@@ -9677,90 +9847,31 @@ local creator = __DIST.load('d')
 		}) :: TextButton
 		local label = option:FindFirstChild("Label")
 
-
-		table.insert(backup,{
-			['option'] = option,
-			['label'] = label,
-		})
-
 		structures.Options[index] = option.__instance
 
-		-- option:GetPropertyChangedSignal("GuiState"):Connect(function()
-		-- 	if not object.Expanded then
-		-- 		return
-		-- 	end
+		option:GetPropertyChangedSignal("GuiState"):Connect(function()
+			if not object.Expanded then
+				return
+			end
 
-		-- 	if option.GuiState == Enum.GuiState.Hover then
-		-- 		option.BackgroundTransparency = self.Theme.Controls.SelectionFocused[2].Value
+			if option.GuiState == Enum.GuiState.Hover then
+				option.BackgroundTransparency = self.Theme.Controls.SelectionFocused[2].Value
 
-		-- 		label.TextColor3 = self.Theme.Controls.SelectionFocusedAccent[1].Value
-		-- 		label.TextTransparency = self.Theme.Controls.SelectionFocusedAccent[2].Value
+				label.TextColor3 = self.Theme.Controls.SelectionFocusedAccent[1].Value
+				label.TextTransparency = self.Theme.Controls.SelectionFocusedAccent[2].Value
+			else
+				option.BackgroundTransparency = 1
 
-		-- 		warn('Hover : ')
-		-- 	else
-		-- 		option.BackgroundTransparency = 1
-
-		-- 		label.TextColor3 = self.Theme.Text.Primary[1].Value
-		-- 		label.TextTransparency = self.Theme.Text.Primary[2].Value
-
-		-- 		warn('not Hover')
-		-- 		end
-		-- end)
-
-		if multi and table.find(selectedValues, properties.Options[index]) then 
-			updateHover(option, label, true);
-			update_structures();
-		else 
-			if properties.Value == properties.Options[index] then 
-
-				updateHover(option, label, true);
-				structures.CurrentTab.Text = tostring(properties.Value);
-			end;	
-		end;
+				label.TextColor3 = self.Theme.Text.Primary[1].Value
+				label.TextTransparency = self.Theme.Text.Primary[2].Value
+			end
+		end)
 
 		option.MouseButton1Click:Connect(function()
-			 if object then
-				local key = properties.Options[index]
-
-                if multi then
-					
-					if not table.find(selectedValues, key) then 
-						table.insert(selectedValues, key);
-						updateHover(option, label, true);
-					else 
-						local removeKey = table.find(selectedValues, key)
-
-						if removeKey then 
-							table.remove(selectedValues, removeKey)
-							updateHover(option, label, false);
-						end;
-					end;
-					
-                    if properties.ValueChanged then
-                        properties.Value = table.clone(selectedValues)
-						object.Value = properties.Value
-                        --task.spawn(properties.ValueChanged, object, table.clone(selectedValues))
-                    end
-
-					update_structures();
-                else
-                    object.Expanded = false
-					object.Value = index
-
-                	if properties.ValueChanged then
-
-						for int, val in next, backup do 
-							pcall(updateHover, val.option, val.label, false);
-						end;
-
-						updateHover(option, label, true);	
-                        
-                        --properties.Value = key
-						structures.CurrentTab.Text = tostring(key);
-                       -- task.spawn(properties.ValueChanged, object, key)
-                    end
-                end
-            end
+			if object then
+				object.Expanded = false
+				object.Value = index
+			end
 		end)
 	end
 
@@ -9872,88 +9983,39 @@ local creator = __DIST.load('d')
 			BackgroundTransparency = 1,
 			Size = UDim2.fromScale(1, 1),
 
-			create("Frame")({
-			Name = "PullDownMenuWrapper",
-			AutomaticSize = Enum.AutomaticSize.X,
-			BorderSizePixel = 0,
-
-			__dynamicKeys = {
-				BackgroundColor3 = theme.MenuBackground[1],
-				BackgroundTransparency = theme.MenuBackground[2],
-			},
-
-			create("UICorner")({ CornerRadius = UDim.new(0, 6) }),
-			create("UIStroke")({
-				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-				Transparency = 0.9,
-			}),
-			create("UIListLayout")({
-				Name = "WrapperLayout",
-				SortOrder = Enum.SortOrder.LayoutOrder,
-			}),
-
-			-- search bar (Searchable = true)
-			create("Frame")({
-				Name = "SearchBar",
-				AutomaticSize = Enum.AutomaticSize.Y,
-				BackgroundTransparency = 1,
-				BorderSizePixel = 0,
-				LayoutOrder = 0,
-				Size = UDim2.new(1, 0, 0, 0),
-				Visible = false,
-
-				create("UIPadding")({
-					PaddingBottom = UDim.new(0, 3),
-					PaddingLeft = UDim.new(0, 6),
-					PaddingRight = UDim.new(0, 6),
-					PaddingTop = UDim.new(0, 6),
-				}),
-
-				create("TextBox")({
-					Name = "SearchInput",
-					BackgroundTransparency = 0.88,
-					BorderSizePixel = 0,
-					ClearTextOnFocus = false,
-					FontFace = Font.new("rbxassetid://12187365364"),
-					PlaceholderText = "Search...",
-					Text = "",
-					TextSize = 13,
-					TextXAlignment = Enum.TextXAlignment.Left,
-					Size = UDim2.new(1, 0, 0, 26),
-
-					__dynamicKeys = {
-						BackgroundColor3 = self.Theme.Controls.View[1],
-						TextColor3 = self.Theme.Text.Primary[1],
-						PlaceholderColor3 = self.Theme.Text.Secondary[1],
-					},
-
-					create("UICorner")({ CornerRadius = UDim.new(0, 5) }),
-					create("UIPadding")({
-						PaddingLeft = UDim.new(0, 8),
-						PaddingRight = UDim.new(0, 8),
-					}),
-				}),
-			}),
-
 			create("ScrollingFrame")({
 				Name = "PullDownMenu",
-				AutomaticSize = Enum.AutomaticSize.X,
-				BackgroundTransparency = 1,
+				AutomaticSize = Enum.AutomaticSize.XY,
+				BorderColor3 = Color3.fromRGB(0, 0, 0),
 				BorderSizePixel = 0,
 				AutomaticCanvasSize = Enum.AutomaticSize.Y,
 				CanvasSize = UDim2.new(),
-				Size = UDim2.new(0, 0, 0, 200),
-				LayoutOrder = 1,
 				ScrollBarImageColor3 = Color3.fromRGB(0, 0, 0),
 				ScrollBarImageTransparency = 0.5,
 				ScrollBarThickness = 3,
+
+				__dynamicKeys = {
+					BackgroundColor3 = theme.MenuBackground[1],
+					BackgroundTransparency = theme.MenuBackground[2],
+				},
+
+				create("UICorner")({
+					Name = "UICorner",
+					CornerRadius = UDim.new(0, 6),
+				}),
+
+				create("UIStroke")({
+					Name = "UIStroke",
+					ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+					Transparency = 0.9,
+				}),
 
 				create("UIPadding")({
 					Name = "UIPadding",
 					PaddingBottom = UDim.new(0, 5),
 					PaddingLeft = UDim.new(0, 5),
 					PaddingRight = UDim.new(0, 5),
-					PaddingTop = UDim.new(0, 3),
+					PaddingTop = UDim.new(0, 5),
 				}),
 
 				create("UIListLayout")({
@@ -9963,30 +10025,10 @@ local creator = __DIST.load('d')
 				}),
 			}),
 		}),
-		}),
 	}) :: ScreenGui
 
 	structures.MenuBody = structures.MenuContainer:FindFirstChild("MenuBody") :: CanvasGroup
-	local pullWrapper = structures.MenuBody:FindFirstChild("PullDownMenuWrapper")
-	structures.SearchBar = pullWrapper and pullWrapper:FindFirstChild("SearchBar")
-	structures.Menu = pullWrapper and pullWrapper:FindFirstChild("PullDownMenu") or structures.MenuBody:FindFirstChild("PullDownMenu") :: ScrollingFrame
-
-	-- search logic
-	if properties.Searchable and structures.SearchBar then
-		structures.SearchBar.Visible = true
-		local searchInput = structures.SearchBar:FindFirstChild("SearchInput")
-		if searchInput then
-			searchInput:GetPropertyChangedSignal("Text"):Connect(function()
-				local query = string.lower(searchInput.Text)
-				for _, opt in ipairs(structures.Options) do
-					local lbl = opt:FindFirstChild("Label")
-					if lbl then
-						opt.Visible = query == "" or string.find(string.lower(lbl.Text), query, 1, true) ~= nil
-					end
-				end
-			end)
-		end
-	end
+	structures.Menu = structures.MenuBody:FindFirstChild("PullDownMenu") :: ScrollingFrame
 
 	local object
 	local bindings = {
@@ -10005,12 +10047,6 @@ local creator = __DIST.load('d')
 
 			if expand then
 				structures.MenuContainer.Parent = structures.Body.__instance
-				-- reset search when opening
-				if properties.Searchable and structures.SearchBar then
-					local si = structures.SearchBar:FindFirstChild("SearchInput")
-					if si then si.Text = "" end
-					for _, opt in ipairs(structures.Options) do opt.Visible = true end
-				end
 			end
 
 			anchor()
@@ -10034,23 +10070,10 @@ local creator = __DIST.load('d')
 			end
 		end,
 
-		Value = function(value)
+		Value = function(value: number)
 			if properties.ValueChanged then
-				
-                properties.Value = value
-                warn('properties : ', value)
-
-                if multi then 
-					-- warn('multi : ', value, properties.ValueChanged, object)
-                    -- task.spawn(properties.ValueChanged, object, value)
-
-					properties.ValueChanged(object,value)
-
-                    return;
-                end;
-
-                local key = properties.Options[value] or value
-				task.spawn(properties.ValueChanged, object, key)
+				properties.Value = value
+				task.spawn(properties.ValueChanged, object, value)
 			end
 		end,
 	}
@@ -10069,29 +10092,6 @@ local creator = __DIST.load('d')
 
 		return structures.Options[index]
 	end
-
-	object.SetValues = function(self, values)
-		if not values or type(values) ~= 'table' then 
-			return;
-		end;
-
-		for int, val in next, structures.Options do 
-			val:Destroy()
-			table.clear(object.Options)
-		end;
-
-		table.clear(structures.Options);
-		
-		for int, val in next, values do 
-			table.insert(object.Options, val)
-			option(object, val, #structures.Options+1)
-		end;
-	end;
-
-	object.SetValue = function(value) 
-
-	end;
-
 	object.Remove = function(self, index: number?)
 		if index and structures.Options[index] then
 			structures.Options[index]:Destroy()
@@ -10138,8 +10138,1027 @@ local creator = __DIST.load('d')
 
 	return object
 end
-end function __DIST.M()
---// Accents module — apply with Cascade.New({ Theme = Cascade.Themes.Dark, Accent = Cascade.Accents.Blue })
+end function __DIST.G():typeof(__modImpl())local v=__DIST.cache.G if not v then v={c=__modImpl()}__DIST.cache.G=v end return v.c end end do local function __modImpl()
+local notificationList = {}
+
+local services = __DIST.e()
+local tweenService = services.TweenService
+
+local activeNotifications = {}
+local MAX_NOTIFICATIONS = 4
+local STACK_OFFSET_Y = -12
+local SCALE_DECREMENT = 0.05
+
+function notificationList.AddNotification(notificationObj, frame)
+	if #activeNotifications >= MAX_NOTIFICATIONS then
+		local oldest = table.remove(activeNotifications, 1)
+		if oldest and oldest.Object and oldest.Object.Close then
+			oldest.Object:Close()
+		end
+	end
+
+	table.insert(activeNotifications, {
+		Object = notificationObj,
+		Frame = frame,
+	})
+
+	notificationList.UpdateStack()
+end
+
+function notificationList.UpdateStack()
+	local total = #activeNotifications
+
+	for i = 1, total do
+		local notif = activeNotifications[i]
+		local frame = notif.Frame.__instance
+
+		if not frame or not frame.Parent then
+			continue
+		end
+
+		local age = total - i
+
+		local targetScale = 1 - (age * SCALE_DECREMENT)
+		local targetY = (age * STACK_OFFSET_Y)
+
+		frame.ZIndex = 100 - age
+
+		local baseOffsetX = -162.5
+		local baseOffsetY = 0
+		local endOffsetY = baseOffsetY + targetY
+
+		local scaleObj = frame:FindFirstChild("UIScale")
+
+		if age > 0 then
+			if scaleObj then
+				tweenService
+					:Create(scaleObj, TweenInfo.new(0.4, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {
+						Scale = targetScale,
+					})
+					:Play()
+			end
+
+			tweenService
+				:Create(frame, TweenInfo.new(0.4, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {
+					Position = UDim2.new(1, baseOffsetX, 1, endOffsetY),
+				})
+				:Play()
+
+			if notif.Object.UpdateState then
+				notif.Object:UpdateState(age)
+			end
+		else
+			if scaleObj then
+				tweenService
+					:Create(scaleObj, TweenInfo.new(0.4, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {
+						Scale = 1,
+					})
+					:Play()
+			end
+
+			tweenService
+				:Create(frame, TweenInfo.new(0.4, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {
+					Position = UDim2.new(1, baseOffsetX, 1, baseOffsetY),
+				})
+				:Play()
+
+			if notif.Object.UpdateState then
+				notif.Object:UpdateState(age)
+			end
+		end
+	end
+end
+
+function notificationList.RemoveNotification(notificationObj)
+	for i, notif in ipairs(activeNotifications) do
+		if notif.Object == notificationObj then
+			table.remove(activeNotifications, i)
+			break
+		end
+	end
+
+	notificationList.UpdateStack()
+end
+
+return notificationList
+end function __DIST.H():typeof(__modImpl())local v=__DIST.cache.H if not v then v={c=__modImpl()}__DIST.cache.H=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
+
+return function(self: any, properties: NotificationProperties__DARKLUA_TYPE_7, state: { Age: number }, MAX_NOTIFICATIONS: number)
+	local creator = __DIST.d()
+
+	local create = creator.Create
+
+	local notificationsContainer = self.__instance:FindFirstChild("Notifications")
+	if not notificationsContainer then
+		notificationsContainer = create("Frame")({
+			Name = "Notifications",
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+			BackgroundTransparency = 1,
+			BorderColor3 = Color3.fromRGB(0, 0, 0),
+			BorderSizePixel = 0,
+			Size = UDim2.fromScale(1, 1),
+			ZIndex = 200,
+			Parent = self.__instance,
+
+			create("UIPadding")({
+				Name = "UIPadding",
+				PaddingBottom = UDim.new(0, 15),
+				PaddingRight = UDim.new(0, 15),
+			}),
+		}).__instance
+	end
+
+	local body = create("Frame")({
+		Name = "Notification",
+		AnchorPoint = Vector2.new(0.5, 1),
+		AutomaticSize = Enum.AutomaticSize.Y,
+		BackgroundTransparency = 1,
+		BorderColor3 = Color3.fromRGB(0, 0, 0),
+		BorderSizePixel = 0,
+		Position = UDim2.new(1, -162.5, 1, 0),
+		Size = UDim2.fromOffset(325, 0),
+		Parent = notificationsContainer,
+
+		create("Frame")({
+			Name = "Canvas",
+			AnchorPoint = Vector2.new(0, 0),
+			AutomaticSize = Enum.AutomaticSize.Y,
+			BackgroundColor3 = self.Theme.Controls.Sidebar[1].Value,
+			BackgroundTransparency = 0.1,
+			BorderColor3 = Color3.fromRGB(0, 0, 0),
+			BorderSizePixel = 0,
+			Position = UDim2.fromScale(0, 0),
+			Size = UDim2.fromScale(1, 0),
+
+			__dynamicKeys = {
+				BackgroundColor3 = self.Theme.Controls.Sidebar[1],
+			},
+
+			__contextKeys = {
+				BackgroundTransparency = function()
+					return state.Age >= (MAX_NOTIFICATIONS - 1) and 1 or 0.1
+				end,
+			},
+
+			create("UICorner")({
+				Name = "UICorner",
+				CornerRadius = UDim.new(0, 12),
+			}),
+
+			create("UIListLayout")({
+				Name = "UIListLayout",
+				Padding = UDim.new(0, 5),
+				SortOrder = Enum.SortOrder.LayoutOrder,
+				VerticalAlignment = Enum.VerticalAlignment.Center,
+			}),
+
+			create("Frame")({
+				Name = "Content",
+				AutomaticSize = Enum.AutomaticSize.Y,
+				BackgroundColor3 = Color3.fromRGB(255, 0, 68),
+				BackgroundTransparency = 1,
+				BorderColor3 = Color3.fromRGB(0, 0, 0),
+				BorderSizePixel = 0,
+				LayoutOrder = 1,
+				Size = UDim2.fromScale(1, 0),
+
+				create("Frame")({
+					Name = "TitleContainer",
+					AutomaticSize = Enum.AutomaticSize.XY,
+					BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+					BackgroundTransparency = 1,
+					BorderColor3 = Color3.fromRGB(0, 0, 0),
+					BorderSizePixel = 0,
+					LayoutOrder = 1,
+
+					create("UIListLayout")({
+						Name = "UIListLayout",
+						FillDirection = Enum.FillDirection.Horizontal,
+						Padding = UDim.new(0, 5),
+						SortOrder = Enum.SortOrder.LayoutOrder,
+						VerticalAlignment = Enum.VerticalAlignment.Center,
+					}),
+
+					create("ImageLabel")({
+						Name = "Icon",
+						BackgroundTransparency = 1,
+						LayoutOrder = 1,
+						Size = UDim2.fromOffset(13, 13),
+						Visible = false,
+
+						__dynamicKeys = {
+							ImageColor3 = self.Theme.Text.Primary[1],
+						},
+						__contextKeys = {
+							ImageTransparency = function()
+								return state.Age >= (MAX_NOTIFICATIONS - 1) and 1 or self.Theme.Text.Primary[2].Value
+							end,
+						},
+					}),
+
+					create("TextLabel")({
+						Name = "Title",
+						AutomaticSize = Enum.AutomaticSize.Y,
+						BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+						BackgroundTransparency = 1,
+						BorderColor3 = Color3.fromRGB(0, 0, 0),
+						BorderSizePixel = 0,
+						LayoutOrder = 2,
+						FontFace = Font.new("rbxassetid://12187365364", Enum.FontWeight.Bold, Enum.FontStyle.Normal),
+						LineHeight = 0,
+						Size = UDim2.new(1, 0, 0, 20),
+						Text = properties.Title,
+						TextColor3 = self.Theme.Text.Primary[1].Value,
+						TextSize = 13,
+						TextTransparency = self.Theme.Text.Primary[2].Value,
+						TextWrapped = true,
+						RichText = true,
+						TextXAlignment = Enum.TextXAlignment.Left,
+
+						__dynamicKeys = {
+							TextColor3 = self.Theme.Text.Primary[1],
+							TextTransparency = self.Theme.Text.Primary[2],
+						},
+
+						__contextKeys = {
+							TextTransparency = function()
+								return state.Age >= (MAX_NOTIFICATIONS - 1) and 1 or self.Theme.Text.Primary[2].Value
+							end,
+						},
+					}),
+				}),
+
+				create("UIListLayout")({
+					Name = "UIListLayout",
+					SortOrder = Enum.SortOrder.LayoutOrder,
+				}),
+
+				create("TextLabel")({
+					Name = "Subtitle",
+					AutomaticSize = Enum.AutomaticSize.Y,
+					BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+					BackgroundTransparency = 1,
+					BorderColor3 = Color3.fromRGB(0, 0, 0),
+					BorderSizePixel = 0,
+					FontFace = Font.new("rbxassetid://12187365364"),
+					LayoutOrder = 1,
+					Position = UDim2.fromScale(0, 0.147),
+					RichText = true,
+					Size = UDim2.fromScale(1, 0),
+					Text = properties.Subtitle,
+					TextColor3 = self.Theme.Text.Secondary[1].Value,
+					TextSize = 13,
+					TextTransparency = self.Theme.Text.Secondary[2].Value,
+					TextWrapped = true,
+					TextXAlignment = Enum.TextXAlignment.Left,
+					Visible = properties.Subtitle ~= "",
+
+					__dynamicKeys = {
+						TextColor3 = self.Theme.Text.Secondary[1],
+						TextTransparency = self.Theme.Text.Secondary[2],
+					},
+
+					__contextKeys = {
+						TextTransparency = function()
+							return state.Age >= (MAX_NOTIFICATIONS - 1) and 1 or self.Theme.Text.Secondary[2].Value
+						end,
+					},
+				}),
+
+				create("UIPadding")({
+					Name = "UIPadding",
+					PaddingBottom = UDim.new(0, 12),
+					PaddingLeft = UDim.new(0, 12),
+					PaddingRight = UDim.new(0, 12),
+				}),
+			}),
+
+			create("Frame")({
+				Name = "Topbar",
+				AutomaticSize = Enum.AutomaticSize.Y,
+				BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+				BackgroundTransparency = 1,
+				BorderColor3 = Color3.fromRGB(0, 0, 0),
+				BorderSizePixel = 0,
+				Size = UDim2.fromScale(1, 0),
+				Visible = (properties.App ~= nil) or (properties.Icon ~= nil),
+
+				create("UIListLayout")({
+					Name = "UIListLayout",
+					FillDirection = Enum.FillDirection.Horizontal,
+					Padding = UDim.new(0, 5),
+					SortOrder = Enum.SortOrder.LayoutOrder,
+					VerticalAlignment = Enum.VerticalAlignment.Center,
+				}),
+
+				create("TextLabel")({
+					Name = "App",
+					AutomaticSize = Enum.AutomaticSize.X,
+					BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+					BackgroundTransparency = 1,
+					BorderColor3 = Color3.fromRGB(0, 0, 0),
+					BorderSizePixel = 0,
+					FontFace = Font.new("rbxassetid://12187365364", Enum.FontWeight.Medium, Enum.FontStyle.Normal),
+					LayoutOrder = 1,
+					LineHeight = 0,
+					Size = UDim2.fromOffset(0, 14),
+					Text = properties.App or "",
+					TextColor3 = self.Theme.Text.Primary[1].Value,
+					TextSize = 13,
+					TextTransparency = 0.5,
+					TextXAlignment = Enum.TextXAlignment.Left,
+					RichText = true,
+					Visible = properties.App ~= nil,
+
+					__dynamicKeys = {
+						TextColor3 = self.Theme.Text.Primary[1],
+					},
+				}),
+
+				create("ImageLabel")({
+					Name = "Icon",
+					BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+					BackgroundTransparency = 1,
+					BorderColor3 = Color3.fromRGB(0, 0, 0),
+					BorderSizePixel = 0,
+					Image = properties.AppIcon or "",
+					ImageColor3 = self.Theme.Text.Primary[1].Value,
+					Size = UDim2.fromOffset(20, 20),
+					Visible = properties.AppIcon ~= nil,
+
+					__dynamicKeys = {
+						ImageColor3 = self.Theme.Text.Primary[1],
+					},
+				}),
+
+				create("UIPadding")({
+					Name = "UIPadding",
+					PaddingLeft = UDim.new(0, 12),
+					PaddingRight = UDim.new(0, 12),
+					PaddingTop = UDim.new(0, 12),
+				}),
+			}),
+		}),
+
+		create("Folder")({
+			Name = "LayoutIgnore",
+
+			create("TextButton")({
+				Name = "Exit",
+				AnchorPoint = Vector2.new(0.5, 0.5),
+				AutoButtonColor = false,
+				BackgroundColor3 = self.Theme.Controls.View[1].Value,
+				BackgroundTransparency = 0.1,
+				BorderColor3 = Color3.fromRGB(0, 0, 0),
+				BorderSizePixel = 0,
+				FontFace = Font.new("rbxassetid://12187365364"),
+				Position = UDim2.fromOffset(3, 3),
+				Size = UDim2.fromOffset(20, 20),
+				Text = "",
+				TextColor3 = self.Theme.Text.Primary[1].Value,
+				TextSize = 14,
+				TextTransparency = 0.5,
+
+				__dynamicKeys = {
+					BackgroundColor3 = self.Theme.Controls.View[1],
+				},
+
+				create("UICorner")({
+					Name = "UICorner",
+					CornerRadius = UDim.new(1, 0),
+				}),
+
+				create("ImageLabel")({
+					Name = "Icon",
+					AnchorPoint = Vector2.new(0.5, 0.5),
+					BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+					BackgroundTransparency = 1,
+					BorderColor3 = Color3.fromRGB(0, 0, 0),
+					BorderSizePixel = 0,
+					Image = "rbxassetid://72660323302468",
+					ImageColor3 = self.Theme.Text.Primary[1].Value,
+					ImageTransparency = 0.5,
+					Position = UDim2.fromScale(0.5, 0.5),
+					Size = UDim2.fromOffset(20, 20),
+
+					__dynamicKeys = {
+						ImageColor3 = self.Theme.Text.Primary[1],
+					},
+				}),
+
+				create("Frame")({
+					Name = "Shadow",
+					BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+					BackgroundTransparency = 1,
+					BorderColor3 = Color3.fromRGB(0, 0, 0),
+					BorderSizePixel = 0,
+					Size = UDim2.fromScale(1, 1),
+
+					create("UIStroke")({
+						Name = "UIStroke",
+						ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+						Transparency = 0.9,
+					}),
+
+					create("UICorner")({
+						Name = "UICorner",
+						CornerRadius = UDim.new(1, 0),
+					}),
+				}),
+
+				create("UIStroke")({
+					Name = "UIStroke",
+					ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+					Color = self.Theme.Text.Primary[1].Value,
+					Thickness = 2,
+					Transparency = 0.96,
+
+					__dynamicKeys = {
+						Color = self.Theme.Text.Primary[1],
+					},
+				}),
+			}),
+		}),
+
+		create("UIScale")({
+			Name = "UIScale",
+			Scale = 0.85,
+		}),
+	}) :: Frame
+
+	local exitBtn = body.LayoutIgnore.Exit
+	local canvas = body.Canvas
+	local content = canvas.Content
+	local topbar = canvas.Topbar
+
+	return body, exitBtn, canvas, content, topbar
+end
+end function __DIST.I():typeof(__modImpl())local v=__DIST.cache.I if not v then v={c=__modImpl()}__DIST.cache.I=v end return v.c end end do local function __modImpl()
+local types = __DIST.b()
+
+return function(self, properties: NotificationProperties__DARKLUA_TYPE_7): Notification__DARKLUA_TYPE_8	
+local services = __DIST.e()
+	local binder = __DIST.c()
+	local notificationList = __DIST.H()
+	local ui = __DIST.I()
+
+	local tweenService = services.TweenService
+
+	properties = properties or {}
+	properties.Title = properties.Title or "Notification"
+	properties.Subtitle = properties.Subtitle or ""
+	properties.Duration = properties.Duration or 6
+
+	if properties.App then
+		properties.App = string.upper(properties.App)
+	end
+
+	local closed = false
+	local MAX_NOTIFICATIONS = 4
+	local state = { Age = 0 }
+
+	local body, exitBtn, canvas, content, topbar = ui(self, properties, state, MAX_NOTIFICATIONS)
+
+	local bindings = {
+		Title = function(value: string)
+			content.TitleContainer.Title.Text = value
+		end,
+		Subtitle = function(value: string)
+			content.Subtitle.Text = value
+			content.Subtitle.Visible = value ~= ""
+		end,
+		App = function(value: string)
+			local upperValue = string.upper(value or "")
+			topbar.App.Text = upperValue
+			topbar.App.Visible = value ~= nil
+			topbar.Visible = (value ~= nil) or (properties.AppIcon ~= nil)
+
+			if properties.App ~= upperValue then
+				properties.App = upperValue
+			end
+		end,
+		AppIcon = function(value: string)
+			topbar.Icon.Image = value or ""
+			topbar.Icon.Visible = value ~= nil
+			topbar.Visible = (properties.App ~= nil) or (value ~= nil)
+		end,
+		Icon = function(value: string)
+			if value then
+				content.TitleContainer.Icon.Image = value
+			end
+			content.TitleContainer.Icon.Visible = value ~= nil
+		end,
+	}
+
+	local object = binder.Wrap(properties, bindings, body, { "App", "Icon" })
+
+	object.Type = "Notification"
+	object.Theme = self.Theme
+
+	binder.Apply(properties, object)
+
+	local function closeNotification(fromUserInput: boolean?)
+		if closed then
+			return
+		end
+		closed = true
+
+		if not body.Parent then
+			return
+		end
+
+		if properties.Closed then
+			task.spawn(properties.Closed, object, fromUserInput)
+		end
+
+		local fadeTween = tweenService:Create(
+			object.__instance,
+			TweenInfo.new(0.4, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+			{
+				Position = object.__instance.Position + UDim2.fromOffset(350, 0),
+			}
+		)
+
+		object:UpdateState(MAX_NOTIFICATIONS, false)
+
+		local scale = object.__instance:FindFirstChild("UIScale")
+		if scale then
+			tweenService
+				:Create(scale, TweenInfo.new(0.4, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {
+					Scale = 0.85,
+				})
+				:Play()
+		end
+
+		fadeTween:Play()
+		fadeTween.Completed:Connect(function()
+			if body.Parent then
+				notificationList.RemoveNotification(object)
+				body:Destroy()
+			end
+		end)
+	end
+
+	exitBtn.MouseButton1Click:Connect(function()
+		closeNotification(true)
+	end)
+
+	function object:Close(fromUserInput: boolean?)
+		closeNotification(fromUserInput)
+	end
+
+	function object:UpdateState(age: number, instant: boolean?)
+		state.Age = age
+
+		local isFaded = age >= (MAX_NOTIFICATIONS - 1)
+		local isPrimary = age == 0
+
+		local exitBgFade = isPrimary and 0.1 or 1
+		local exitStrokeFade = isPrimary and 0.96 or 1
+		local exitShadowFade = isPrimary and 0.9 or 1
+		local exitIconFade = isPrimary and 0.5 or 1
+
+		if isFaded then
+			exitBgFade = 1
+			exitStrokeFade = 1
+			exitShadowFade = 1
+			exitIconFade = 1
+		end
+
+		local targetBgTransparency = isFaded and 1 or 0.1
+
+		local function apply(inst, props)
+			if instant then
+				for k, v in pairs(props) do
+					inst[k] = v
+				end
+			else
+				tweenService
+					:Create(inst, TweenInfo.new(0.4, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), props)
+					:Play()
+			end
+		end
+
+		apply(canvas, { BackgroundTransparency = targetBgTransparency })
+
+		for _, descendant in ipairs(canvas:GetDescendants()) do
+			if descendant:IsA("TextLabel") then
+				local targetTextTransparency = 1
+				if not isFaded then
+					if descendant.Name == "Title" then
+						targetTextTransparency = self.Theme.Text.Primary[2].Value
+					elseif descendant.Name == "Subtitle" then
+						targetTextTransparency = self.Theme.Text.Secondary[2].Value
+					elseif descendant.Name == "App" then
+						targetTextTransparency = 0.5
+					end
+				end
+				apply(descendant, { TextTransparency = targetTextTransparency })
+			elseif descendant:IsA("ImageLabel") and descendant.Name ~= "Icon" then
+				apply(descendant, { ImageTransparency = isFaded and 1 or 0 })
+			end
+		end
+
+		if content:FindFirstChild("TitleContainer") and content.TitleContainer:FindFirstChild("Icon") then
+			apply(content.TitleContainer.Icon, { ImageTransparency = isFaded and 1 or 0 })
+		end
+		if topbar:FindFirstChild("Icon") then
+			apply(topbar.Icon, { ImageTransparency = isFaded and 1 or 0 })
+		end
+
+		apply(exitBtn, { BackgroundTransparency = exitBgFade })
+		apply(exitBtn.Icon, { ImageTransparency = exitIconFade })
+		apply(exitBtn.UIStroke, { Transparency = exitStrokeFade })
+
+		local shadow = exitBtn:FindFirstChild("Shadow")
+		if shadow and shadow:FindFirstChild("UIStroke") then
+			apply(shadow.UIStroke, { Transparency = exitShadowFade })
+		end
+	end
+
+	body.Position = UDim2.new(1, 187.5, 1, 0)
+
+	object:UpdateState(0, true)
+
+	notificationList.AddNotification(object, body)
+
+	if body:FindFirstChild("UIScale") then
+		body.UIScale.Scale = 0.85
+		tweenService
+			:Create(body.UIScale, TweenInfo.new(0.4, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {
+				Scale = 1,
+			})
+			:Play()
+	end
+
+	tweenService
+		:Create(body.__instance, TweenInfo.new(0.4, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {
+			Position = UDim2.new(1, -162.5, 1, 0),
+		})
+		:Play()
+
+	if properties.Duration > 0 then
+		task.delay(properties.Duration, function()
+			closeNotification()
+		end)
+	end
+
+	return object
+end
+end function __DIST.J():typeof(__modImpl())local v=__DIST.cache.J if not v then v={c=__modImpl()}__DIST.cache.J=v end return v.c end end do local function __modImpl()--// Imports
+
+local binder = __DIST.c()
+
+--// Variables
+local components = {
+	Window = __DIST.l(),
+	Section = __DIST.m(),
+	Tab = __DIST.o(),
+	PageSection = __DIST.q(),
+	Form = __DIST.r(),
+	Row = __DIST.s(),
+	HStack = __DIST.t(),
+	VStack = __DIST.u(),
+	TitleStack = __DIST.v(),
+	Label = __DIST.w(),
+	Symbol = __DIST.x(),
+	Toggle = __DIST.y(),
+	TextField = __DIST.z(),
+	KeybindField = __DIST.A(),
+	Slider = __DIST.B(),
+	Button = __DIST.C(),
+	Stepper = __DIST.D(),
+	RadioButtonGroup = __DIST.E(),
+	PopUpButton = __DIST.F(),
+	PullDownButton = __DIST.G(),
+	Page = __DIST.n()
+,
+	Notification = __DIST.J(),
+}
+
+--// Initialize
+local function wrap(name, make)
+	return function(self, ...)
+		local result, raw = make(self, ...)
+
+		if
+			typeof(result) == "Instance"
+			or (typeof(result) == "table" and getmetatable(result) and typeof(getmetatable(result)) == "Instance")
+		then
+			raw = result
+			result = binder.Wrap({}, {}, result)
+		end
+
+		if typeof(result) == "table" then
+			if result.Type == nil then
+				result.Type = name
+			end
+
+			if result.Theme == nil and self and self.Theme then
+				result.Theme = self.Theme
+			end
+		end
+
+		binder.Apply(components, result)
+
+		local final = raw
+			or (
+				typeof(result) == "table"
+				and pcall(function()
+					return result.__instance
+				end)
+				and result.__instance
+			)
+
+		if final ~= nil then
+			return result, final
+		end
+
+		return result
+	end
+end
+
+for name, make in pairs(components) do
+	components[name] = wrap(name, make)
+end
+
+function components.register(name: string, make: (any, any) -> any)
+	components[name] = wrap(name, make)
+end
+
+return components
+end function __DIST.K():typeof(__modImpl())local v=__DIST.cache.K if not v then v={c=__modImpl()}__DIST.cache.K=v end return v.c end end do local function __modImpl()--// Imports
+local creator = __DIST.d()
+
+--// References
+local value = creator.Value
+
+--// Private Methods
+local function color4(color: Color3 | string, alpha: number)
+	local parsedColor = (typeof(color) == "Color3" and color) or (typeof(color) == "string" and Color3.fromHex(color))
+
+	return {
+		value(parsedColor),
+		value(1 - (alpha / 100)),
+	}
+end
+
+--// Publish
+return {
+	_id = "Dark",
+
+	Text = {
+		Primary = color4("FFFFFF", 85),
+		Secondary = color4("FFFFFF", 55),
+		Tertiary = color4("FFFFFF", 25),
+		Quaternary = color4("FFFFFF", 10),
+		Quinary = color4("FFFFFF", 5),
+
+		SelectionPrimary = color4("FFFFFF", 100),
+		PrimaryAccent = color4("FFFFFF", 38),
+	},
+
+	Accents = {
+		Red = color4("FF453A", 100),
+	},
+
+	Controls = {
+		Background = color4("1C1C1E", 100),
+
+		View = color4("1F1F21", 100),
+		ViewBorder = color4("FFFFFF", 5),
+
+		WindowControlIcon = color4("000000", 50),
+		WindowControlStroke = color4("FFFFFF", 10),
+		Exit = color4("FF5F57", 100),
+		Minimize = color4("FEBC2E", 100),
+		Zoom = color4("28C840", 100),
+
+		SwitchAccent = color4("478CF6", 100),
+		Selection = color4("007AFF", 100),
+		SelectionStroke = color4("007AFF", 60),
+		SelectionFocused = color4("0A82FF", 100),
+		SelectionFocusedAccent = color4("FFFFFF", 85),
+
+		Sidebar = color4("202023", 84),
+		Separator = {
+			Background = color4("000000", 50),
+			Shadow = color4("FFFFFF", 0),
+		},
+
+		Titlebar = color4("363636", 100),
+		TitlebarShadow = {
+			Background = color4("000000", 0),
+			Color = value(ColorSequence.new({
+				ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
+				ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255)),
+			})),
+			Transparency = value(NumberSequence.new({
+				NumberSequenceKeypoint.new(0, 0.5),
+				NumberSequenceKeypoint.new(1, 1),
+			})),
+		},
+
+		Toggle = {
+			Knob = color4("FFFFFF", 100),
+			KnobEffects = color4("FFFFFF", 100),
+
+			SwitchOff = color4("7a7a7a", 40),
+			SwitchOn = color4("478cf6", 100),
+
+			DepthEffect = value(ColorSequence.new({
+				ColorSequenceKeypoint.new(0, Color3.fromRGB(225, 225, 225)),
+				ColorSequenceKeypoint.new(0.68, Color3.fromRGB(255, 255, 255)),
+				ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255)),
+			})),
+		},
+
+		Slider = {
+			Track = color4("2C2C2E", 100),
+			TrackEffects = color4("000000", 10),
+
+			Thumb = color4("FFFFFF", 100),
+			ThumbStroke = color4("000000", 20),
+			ThumbEffects = color4("FFFFFF", 80),
+		},
+
+		Button = {
+			Shadow = value(Color3.fromRGB(0, 0, 0)),
+			FillPrimary = value(ColorSequence.new({
+				ColorSequenceKeypoint.new(0, Color3.fromRGB(72, 148, 255)),
+				ColorSequenceKeypoint.new(1, Color3.fromRGB(10, 110, 255)),
+			})),
+			FillSecondary = value(ColorSequence.new({
+				ColorSequenceKeypoint.new(0, Color3.fromRGB(60, 60, 60)),
+				ColorSequenceKeypoint.new(1, Color3.fromRGB(55, 55, 55)),
+			})),
+		},
+
+		Stepper = {
+			Background = color4("373737", 100),
+			Dropshadow = color4("000000", 100),
+			Separator = color4("FFFFFF", 10),
+			Filler = color4("FFFFFF", 4),
+			SegmentShadow = value(ColorSequence.new({
+				ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
+				ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0)),
+			})),
+		},
+
+		RadioButtonGroup = {
+			Background = color4("373737", 100),
+			Dot = color4("FFFFFF", 100),
+			Stroke = color4("000000", 20),
+			Overlay = color4("FFFFFF", 8),
+			InnerShadow = color4("FFFFFF", 10),
+		},
+
+		MenuButton = {
+			IndicatorBackground = color4("FFFFFF", 10),
+			MenuBackground = color4("2C2C2E", 95),
+		},
+	},
+}
+end function __DIST.L():typeof(__modImpl())local v=__DIST.cache.L if not v then v={c=__modImpl()}__DIST.cache.L=v end return v.c end end do local function __modImpl()--// Imports
+
+local creator = __DIST.d()
+
+--// References
+local value = creator.Value
+
+--// Private Methods
+local function color4(color: Color3 | string, alpha: number)
+	local parsedColor = (typeof(color) == "Color3" and color) or (typeof(color) == "string" and Color3.fromHex(color))
+
+	return {
+		value(parsedColor),
+		value(1 - (alpha / 100)),
+	}
+end
+
+--// Publish
+return {
+	_id = "Light",
+
+	Text = {
+		Primary = color4("000000", 85),
+		Secondary = color4("000000", 50),
+		Tertiary = color4("000000", 25),
+		Quaternary = color4("000000", 10),
+		Quinary = color4("000000", 5),
+
+		SelectionPrimary = color4("FFFFFF", 100),
+		PrimaryAccent = color4("4D4D4D", 100),
+	},
+
+	Accents = {
+		Red = color4("FF3B30", 100),
+	},
+
+	Controls = {
+		Background = color4("FFFFFF", 100),
+
+		View = color4("FCFCFC", 100),
+		ViewBorder = color4("000000", 5),
+
+		WindowControlIcon = color4("000000", 50),
+		WindowControlStroke = color4("000000", 20),
+		Exit = color4("FF5F57", 100),
+		Minimize = color4("FEBC2E", 100),
+		Zoom = color4("28C840", 100),
+
+		SwitchAccent = color4("478CF6", 100),
+		Selection = color4("007AFF", 100),
+		SelectionStroke = color4("007AFF", 50),
+		SelectionFocused = color4("0A82FF", 100),
+		SelectionFocusedAccent = color4("FFFFFF", 85),
+
+		Sidebar = color4("EAEAEA", 84),
+		Separator = {
+			Background = color4("000000", 18),
+			Shadow = color4("000000", 10),
+		},
+
+		Titlebar = color4("EEEEEE", 100),
+		TitlebarShadow = {
+			Background = color4("EAEAEA", 25),
+			Color = value(ColorSequence.new({
+				ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+				ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0)),
+			})),
+			Transparency = value(NumberSequence.new({
+				NumberSequenceKeypoint.new(0, 0.35),
+				NumberSequenceKeypoint.new(1, 0.35),
+			})),
+		},
+
+		Toggle = {
+			Knob = color4("FFFFFF", 100),
+			KnobEffects = color4("FFFFFF", 100),
+
+			SwitchOff = color4("000000", 9),
+			SwitchOn = color4("478CF6", 100),
+
+			DepthEffect = value(ColorSequence.new({
+				ColorSequenceKeypoint.new(0, Color3.fromRGB(225, 225, 225)),
+				ColorSequenceKeypoint.new(0.68, Color3.fromRGB(255, 255, 255)),
+				ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255)),
+			})),
+		},
+
+		Slider = {
+			Track = color4("000000", 5),
+			TrackEffects = color4("000000", 0),
+
+			Thumb = color4("FFFFFF", 100),
+			ThumbStroke = color4("000000", 2),
+			ThumbEffects = color4("FFFFFF", 100),
+		},
+
+		Button = {
+			Shadow = value(Color3.new(0, 0, 0)),
+			FillPrimary = value(ColorSequence.new({
+				ColorSequenceKeypoint.new(0, Color3.fromRGB(43, 145, 255)),
+				ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 122, 255)),
+			})),
+			FillSecondary = value(ColorSequence.new({
+				ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+				ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255)),
+			})),
+		},
+
+		Stepper = {
+			Background = color4("FFFFFF", 100),
+			Dropshadow = color4("000000", 100),
+			Separator = color4("000000", 22),
+			Filler = color4("000000", 5),
+			SegmentShadow = value(ColorSequence.new({
+				ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
+				ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 255, 255)),
+			})),
+		},
+
+		RadioButtonGroup = {
+			Background = color4("FFFFFF", 100),
+			Dot = color4("FFFFFF", 100),
+			Stroke = color4("000000", 8),
+			Overlay = color4("FFFFFF", 17),
+			InnerShadow = color4("000000", 10),
+		},
+		
+		MenuButton = {
+			IndicatorBackground = color4("000000", 5),
+			MenuBackground = color4("F6F6F6", 95),
+		}
+	},
+}
+end function __DIST.M():typeof(__modImpl())local v=__DIST.cache.M if not v then v={c=__modImpl()}__DIST.cache.M=v end return v.c end end do local function __modImpl()
+return {
+	Dark = __DIST.L(),
+	Light = __DIST.M(),
+}
+end function __DIST.N():typeof(__modImpl())local v=__DIST.cache.N if not v then v={c=__modImpl()}__DIST.cache.N=v end return v.c end end do local function __modImpl()--// Private Methods
 
 local function makeGradient(topHex, bottomHex)
 	return ColorSequence.new({
@@ -10148,22 +11167,34 @@ local function makeGradient(topHex, bottomHex)
 	})
 end
 
+--// Publish
 return {
 	Blue = {
 		_id = "Blue",
+
 		Dark = {
 			SwitchAccent = Color3.fromHex("#0A84FF"),
 			Selection = Color3.fromHex("#007AFF"),
 			SelectionFocused = Color3.fromHex("#0A82FF"),
 			Toggle = { SwitchOn = Color3.fromHex("#0A84FF") },
-			Button = { FillPrimary = makeGradient("#4894FF", "#0A6EFF") },
+			Button = {
+				FillPrimary = ColorSequence.new({
+					ColorSequenceKeypoint.new(0, Color3.fromRGB(72, 148, 255)),
+					ColorSequenceKeypoint.new(1, Color3.fromRGB(10, 110, 255)),
+				}),
+			},
 		},
 		Light = {
 			SwitchAccent = Color3.fromHex("#0A84FF"),
 			Selection = Color3.fromHex("#007AFF"),
 			SelectionFocused = Color3.fromHex("#0A82FF"),
 			Toggle = { SwitchOn = Color3.fromHex("#0A84FF") },
-			Button = { FillPrimary = makeGradient("#2B91FF", "#007AFF") },
+			Button = {
+				FillPrimary = ColorSequence.new({
+					ColorSequenceKeypoint.new(0, Color3.fromRGB(43, 145, 255)),
+					ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 122, 255)),
+				}),
+			},
 		},
 	},
 
@@ -10232,7 +11263,7 @@ return {
 		},
 		Light = {
 			SwitchAccent = Color3.fromHex("#FF9500"),
-			Selection = Color3.fromHex("#BC6000"),
+			Selection = Color3.fromHex("#BC6000"), 
 			SelectionFocused = Color3.fromHex("#D47000"),
 			Toggle = { SwitchOn = Color3.fromHex("#FF9500") },
 			Button = { FillPrimary = makeGradient("#D47000", "#A04800") },
@@ -10292,513 +11323,19 @@ return {
 			Button = { FillPrimary = makeGradient("#626266", "#383838") },
 		},
 	},
-}
-
-end function __DIST.K()
---// Notification stack manager
-
-local notifList_services = __DIST.load('e')
-local notifList_tween    = notifList_services.TweenService
-
-local activeNotifs   = {}
-local MAX_NOTIFS     = 4
-local STACK_OFFSET_Y = -12
-local SCALE_STEP     = 0.05
-
-local notificationList = {}
-
-function notificationList.Add(obj, frame)
-	if #activeNotifs >= MAX_NOTIFS then
-		local oldest = table.remove(activeNotifs, 1)
-		if oldest and oldest.obj and oldest.obj.Close then
-			oldest.obj:Close()
-		end
-	end
-	table.insert(activeNotifs, { obj = obj, frame = frame })
-	notificationList.UpdateStack()
-end
-
-function notificationList.Remove(obj)
-	for i, entry in ipairs(activeNotifs) do
-		if entry.obj == obj then
-			table.remove(activeNotifs, i)
-			break
-		end
-	end
-	notificationList.UpdateStack()
-end
-
-function notificationList.UpdateStack()
-	local total = #activeNotifs
-	for i = 1, total do
-		local entry  = activeNotifs[i]
-		local frame  = entry.frame.__instance
-		if not frame or not frame.Parent then continue end
-
-		local age        = total - i
-		local targetScale = 1 - age * SCALE_STEP
-		local targetY     = age * STACK_OFFSET_Y
-		local easeInfo    = TweenInfo.new(0.35, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out)
-
-		frame.ZIndex = 100 - age
-
-		local scaleObj = frame:FindFirstChild("UIScale")
-		if scaleObj then
-			notifList_tween:Create(scaleObj, easeInfo, { Scale = targetScale }):Play()
-		end
-
-		notifList_tween:Create(frame, easeInfo, {
-			Position = UDim2.new(1, -162.5, 1, targetY),
-		}):Play()
-
-		if entry.obj.UpdateState then
-			entry.obj:UpdateState(age)
-		end
-	end
-end
-
-return notificationList
-
-end function __DIST.L()
---// Notification component
-
-return function(self, properties: NotificationProperties__DARKLUA_TYPE_NOTIF): Notification__DARKLUA_TYPE_NOTIF2
-	local creator         = __DIST.load('d')
-	local binder          = __DIST.load('c')
-	local services        = __DIST.load('e')
-	local notificationList = __DIST.load('K')
-
-	local create       = creator.Create
-	local tweenService = services.TweenService
-
-	properties          = properties or {}
-	properties.Title    = properties.Title or "Notification"
-	properties.Subtitle = properties.Subtitle or ""
-	properties.Duration = properties.Duration or 6
-
-	if properties.App then
-		properties.App = string.upper(properties.App)
-	end
-
-	local closed       = false
-	local MAX_NOTIFS   = 4
-	local state        = { Age = 0 }
-
-	-- ensure notifications container exists on the ScreenGui
-	local notifContainer = self.__instance:FindFirstChild("Notifications")
-	if not notifContainer then
-		notifContainer = create("Frame")({
-			Name                = "Notifications",
-			BackgroundTransparency = 1,
-			BorderSizePixel     = 0,
-			Size                = UDim2.fromScale(1, 1),
-			ZIndex              = 200,
-			Parent              = self.__instance,
-			create("UIPadding")({
-				PaddingBottom = UDim.new(0, 16),
-				PaddingRight  = UDim.new(0, 16),
-			}),
-		}).__instance
-	end
-
-	-- body frame
-	local body = create("Frame")({
-		Name                   = "Notification",
-		AnchorPoint            = Vector2.new(0.5, 1),
-		AutomaticSize          = Enum.AutomaticSize.Y,
-		BackgroundTransparency = 1,
-		BorderSizePixel        = 0,
-		Position               = UDim2.new(1, 187.5, 1, 0),
-		Size                   = UDim2.fromOffset(310, 0),
-		Parent                 = notifContainer,
-
-		-- card
-		create("Frame")({
-			Name                   = "Card",
-			AutomaticSize          = Enum.AutomaticSize.Y,
-			BackgroundTransparency = 0.08,
-			BorderSizePixel        = 0,
-			Size                   = UDim2.fromScale(1, 0),
-
-			__dynamicKeys = {
-				BackgroundColor3 = self.Theme.Controls.Sidebar[1],
-			},
-
-			create("UICorner")({ CornerRadius = UDim.new(0, 13) }),
-			create("UIStroke")({
-				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-				Transparency    = 0.82,
-				__dynamicKeys = { Color = self.Theme.Text.Primary[1] },
-			}),
-			create("UIListLayout")({
-				SortOrder = Enum.SortOrder.LayoutOrder,
-			}),
-
-			-- topbar (App name / AppIcon)
-			create("Frame")({
-				Name                   = "Topbar",
-				AutomaticSize          = Enum.AutomaticSize.Y,
-				BackgroundTransparency = 1,
-				BorderSizePixel        = 0,
-				LayoutOrder            = 0,
-				Size                   = UDim2.fromScale(1, 0),
-				Visible                = (properties.App ~= nil) or (properties.AppIcon ~= nil),
-
-				create("UIListLayout")({
-					FillDirection      = Enum.FillDirection.Horizontal,
-					Padding            = UDim.new(0, 5),
-					SortOrder          = Enum.SortOrder.LayoutOrder,
-					VerticalAlignment  = Enum.VerticalAlignment.Center,
-				}),
-				create("UIPadding")({
-					PaddingLeft  = UDim.new(0, 12),
-					PaddingRight = UDim.new(0, 12),
-					PaddingTop   = UDim.new(0, 12),
-				}),
-
-				create("ImageLabel")({
-					Name                   = "AppIcon",
-					BackgroundTransparency = 1,
-					BorderSizePixel        = 0,
-					Image                  = properties.AppIcon or "",
-					LayoutOrder            = 0,
-					Size                   = UDim2.fromOffset(18, 18),
-					Visible                = properties.AppIcon ~= nil,
-					__dynamicKeys = { ImageColor3 = self.Theme.Text.Primary[1] },
-				}),
-
-				create("TextLabel")({
-					Name                   = "App",
-					AutomaticSize          = Enum.AutomaticSize.X,
-					BackgroundTransparency = 1,
-					BorderSizePixel        = 0,
-					FontFace               = Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold),
-					LayoutOrder            = 1,
-					RichText               = true,
-					Size                   = UDim2.fromOffset(0, 14),
-					Text                   = properties.App or "",
-					TextSize               = 11,
-					TextTransparency       = 0.45,
-					TextXAlignment         = Enum.TextXAlignment.Left,
-					Visible                = properties.App ~= nil,
-					__dynamicKeys = { TextColor3 = self.Theme.Text.Primary[1] },
-				}),
-			}),
-
-			-- content (title + subtitle + icon)
-			create("Frame")({
-				Name                   = "Content",
-				AutomaticSize          = Enum.AutomaticSize.Y,
-				BackgroundTransparency = 1,
-				BorderSizePixel        = 0,
-				LayoutOrder            = 1,
-				Size                   = UDim2.fromScale(1, 0),
-
-				create("UIListLayout")({ SortOrder = Enum.SortOrder.LayoutOrder, Padding = UDim.new(0, 2) }),
-				create("UIPadding")({
-					PaddingBottom = UDim.new(0, 13),
-					PaddingLeft   = UDim.new(0, 13),
-					PaddingRight  = UDim.new(0, 13),
-					PaddingTop    = UDim.new(0, (properties.App or properties.AppIcon) and 4 or 13),
-				}),
-
-				-- title row (icon + text)
-				create("Frame")({
-					Name                   = "TitleRow",
-					AutomaticSize          = Enum.AutomaticSize.XY,
-					BackgroundTransparency = 1,
-					BorderSizePixel        = 0,
-					LayoutOrder            = 0,
-
-					create("UIListLayout")({
-						FillDirection     = Enum.FillDirection.Horizontal,
-						Padding           = UDim.new(0, 5),
-						SortOrder         = Enum.SortOrder.LayoutOrder,
-						VerticalAlignment = Enum.VerticalAlignment.Center,
-					}),
-
-					create("ImageLabel")({
-						Name                   = "Icon",
-						BackgroundTransparency = 1,
-						BorderSizePixel        = 0,
-						Image                  = properties.Icon or "",
-						LayoutOrder            = 0,
-						Size                   = UDim2.fromOffset(14, 14),
-						Visible                = properties.Icon ~= nil,
-						__dynamicKeys = { ImageColor3 = self.Theme.Text.Primary[1] },
-					}),
-
-					create("TextLabel")({
-						Name                   = "Title",
-						AutomaticSize          = Enum.AutomaticSize.Y,
-						BackgroundTransparency = 1,
-						BorderSizePixel        = 0,
-						FontFace               = Font.new("rbxassetid://12187365364", Enum.FontWeight.Bold),
-						LayoutOrder            = 1,
-						RichText               = true,
-						Size                   = UDim2.new(1, 0, 0, 0),
-						Text                   = properties.Title,
-						TextSize               = 13,
-						TextWrapped            = true,
-						TextXAlignment         = Enum.TextXAlignment.Left,
-						__dynamicKeys = {
-							TextColor3       = self.Theme.Text.Primary[1],
-							TextTransparency = self.Theme.Text.Primary[2],
-						},
-					}),
-				}),
-
-				create("TextLabel")({
-					Name                   = "Subtitle",
-					AutomaticSize          = Enum.AutomaticSize.Y,
-					BackgroundTransparency = 1,
-					BorderSizePixel        = 0,
-					FontFace               = Font.new("rbxassetid://12187365364"),
-					LayoutOrder            = 1,
-					RichText               = true,
-					Size                   = UDim2.new(1, 0, 0, 0),
-					Text                   = properties.Subtitle,
-					TextSize               = 13,
-					TextWrapped            = true,
-					TextXAlignment         = Enum.TextXAlignment.Left,
-					Visible                = properties.Subtitle ~= "",
-					__dynamicKeys = {
-						TextColor3       = self.Theme.Text.Secondary[1],
-						TextTransparency = self.Theme.Text.Secondary[2],
-					},
-				}),
-			}),
-		}),
-
-		-- close button (top-right)
-		create("TextButton")({
-			Name                   = "CloseBtn",
-			AnchorPoint            = Vector2.new(1, 0),
-			AutomaticSize          = Enum.AutomaticSize.None,
-			AutoButtonColor        = false,
-			BackgroundTransparency = 0.1,
-			BorderSizePixel        = 0,
-			Position               = UDim2.new(1, -6, 0, 6),
-			Size                   = UDim2.fromOffset(20, 20),
-			Text                   = "",
-			__dynamicKeys = { BackgroundColor3 = self.Theme.Controls.View[1] },
-
-			create("UICorner")({ CornerRadius = UDim.new(1, 0) }),
-			create("UIStroke")({
-				ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-				Transparency    = 0.88,
-				__dynamicKeys = { Color = self.Theme.Text.Primary[1] },
-			}),
-			create("ImageLabel")({
-				Name                   = "X",
-				AnchorPoint            = Vector2.new(0.5, 0.5),
-				BackgroundTransparency = 1,
-				BorderSizePixel        = 0,
-				Image                  = "rbxassetid://104150983958740",
-				Position               = UDim2.fromScale(0.5, 0.5),
-				Size                   = UDim2.fromOffset(10, 10),
-				__dynamicKeys = {
-					ImageColor3       = self.Theme.Text.Primary[1],
-					ImageTransparency = self.Theme.Text.Primary[2],
-				},
-			}),
-		}),
-
-		create("UIScale")({ Name = "UIScale", Scale = 0.9 }),
-	}) :: Frame
-
-	local card     = body.Card
-	local content  = card.Content
-	local topbar   = card.Topbar
-	local closeBtn = body.CloseBtn
-
-	-- bindings
-	local bindings = {
-		Title = function(v: string)
-			content.TitleRow.Title.Text = v
-		end,
-		Subtitle = function(v: string)
-			content.Subtitle.Text    = v
-			content.Subtitle.Visible = v ~= ""
-		end,
-		App = function(v: string)
-			local upper = string.upper(v or "")
-			topbar.App.Text    = upper
-			topbar.App.Visible = v ~= nil
-			topbar.Visible     = (v ~= nil) or (properties.AppIcon ~= nil)
-			properties.App     = upper
-		end,
-		AppIcon = function(v: string)
-			topbar.AppIcon.Image   = v or ""
-			topbar.AppIcon.Visible = v ~= nil
-			topbar.Visible         = (properties.App ~= nil) or (v ~= nil)
-		end,
-		Icon = function(v: string)
-			content.TitleRow.Icon.Image   = v or ""
-			content.TitleRow.Icon.Visible = v ~= nil
-		end,
-	}
-
-	local object = binder.Wrap(properties, bindings, body, { "App", "Icon", "AppIcon" })
-	object.Type  = "Notification"
-	object.Theme = self.Theme
-	binder.Apply(properties, object)
-
-	-- ── helpers ──────────────────────────────────────────────────────────────
-	local ease = TweenInfo.new(0.35, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out)
-
-	local function applyProp(inst, props, instant)
-		if instant then
-			for k, v in pairs(props) do inst[k] = v end
-		else
-			tweenService:Create(inst, ease, props):Play()
-		end
-	end
-
-	function object:UpdateState(age: number, instant: boolean?)
-		state.Age = age
-		local faded    = age >= (MAX_NOTIFS - 1)
-		local isPrimary = age == 0
-
-		applyProp(card, { BackgroundTransparency = faded and 1 or 0.08 }, instant)
-		applyProp(card.UIStroke, { Transparency = faded and 1 or 0.82 }, instant)
-
-		-- text labels
-		for _, d in ipairs(card:GetDescendants()) do
-			if d:IsA("TextLabel") then
-				local tr = 1
-				if not faded then
-					if d.Name == "Title" then
-						tr = self.Theme.Text.Primary[2].Value
-					elseif d.Name == "Subtitle" then
-						tr = self.Theme.Text.Secondary[2].Value
-					elseif d.Name == "App" then
-						tr = 0.45
-					end
-				end
-				applyProp(d, { TextTransparency = tr }, instant)
-			elseif d:IsA("ImageLabel") then
-				applyProp(d, { ImageTransparency = faded and 1 or (d.__dynamicKeys and d.__dynamicKeys.ImageTransparency and d.__dynamicKeys.ImageTransparency.Value or 0) }, instant)
-			end
-		end
-
-		-- close button visibility
-		applyProp(closeBtn, { BackgroundTransparency = (faded or not isPrimary) and 1 or 0.1 }, instant)
-		applyProp(closeBtn.X, { ImageTransparency = (faded or not isPrimary) and 1 or self.Theme.Text.Primary[2].Value }, instant)
-		applyProp(closeBtn.UIStroke, { Transparency = (faded or not isPrimary) and 1 or 0.88 }, instant)
-	end
-
-	local function closeNotification(fromUser: boolean?)
-		if closed then return end
-		closed = true
-		if not body.Parent then return end
-
-		if properties.Closed then
-			task.spawn(properties.Closed, object, fromUser == true)
-		end
-
-		object:UpdateState(MAX_NOTIFS, false)
-
-		local scaleObj = body:FindFirstChild("UIScale")
-		if scaleObj then
-			tweenService:Create(scaleObj, ease, { Scale = 0.9 }):Play()
-		end
-
-		local slideTween = tweenService:Create(body.__instance, ease, {
-			Position = UDim2.new(1, 350, 1, body.__instance.Position.Y.Offset),
-		})
-		slideTween:Play()
-		slideTween.Completed:Connect(function()
-			if body.Parent then
-				notificationList.Remove(object)
-				body:Destroy()
-			end
-		end)
-	end
-
-	closeBtn.MouseButton1Click:Connect(function() closeNotification(true) end)
-
-	function object:Close(fromUser: boolean?)
-		closeNotification(fromUser)
-	end
-
-	-- ── animate in ───────────────────────────────────────────────────────────
-	object:UpdateState(0, true)
-	notificationList.Add(object, body)
-
-	local scaleObj = body:FindFirstChild("UIScale")
-	if scaleObj then
-		scaleObj.Scale = 0.9
-		tweenService:Create(scaleObj, ease, { Scale = 1 }):Play()
-	end
-	tweenService:Create(body.__instance, ease, {
-		Position = UDim2.new(1, -155, 1, 0),
-	}):Play()
-
-	if properties.Duration and properties.Duration > 0 then
-		task.delay(properties.Duration, function()
-			closeNotification(false)
-		end)
-	end
-
-	return object
-end
-
-end function __DIST.J()--// Imports
-
-local binder = __DIST.load('c')
-
---// Variables
-local components = {
-	Window = __DIST.load('o'),
-	Section = __DIST.load('p'),
-	Tab = __DIST.load('q'),
-	PageSection = __DIST.load('s'),
-	Form = __DIST.load('t'),
-	Row = __DIST.load('u'),
-	HStack = __DIST.load('v'),
-	VStack = __DIST.load('w'),
-	TitleStack = __DIST.load('x'),
-	Label = __DIST.load('y'),
-	Symbol = __DIST.load('z'),
-	Toggle = __DIST.load('A'),
-	TextField = __DIST.load('B'),
-	KeybindField = __DIST.load('C'),
-	Keybind = __DIST.load('C'),
-	Slider = __DIST.load('D'),
-	Button = __DIST.load('E'),
-	Stepper = __DIST.load('F'),
-	RadioButtonGroup = __DIST.load('G'),
-	PopUpButton = __DIST.load('H'),
-	PullDownButton = __DIST.load('I'),
-	Notification   = __DIST.load('L'),
-}
-
---// Intialize
-for component, make in pairs(components) do
-	components[component] = (function(make)
-		return function(...)
-			local object = make(...)
-
-			binder.Apply(components, object)
-
-			return object
-		end
-	end)(make)
-end
-
-return components
-end end--// Imports
-
-local utility = __DIST.load('a')
-local types = __DIST.load('b')
-local creator = __DIST.load('d')
-local binder = __DIST.load('c')
-local services = __DIST.load('e')
-
-local symbols = __DIST.load('f')
-local themes = __DIST.load('i')
-local components = __DIST.load('J')
+}end function __DIST.O():typeof(__modImpl())local v=__DIST.cache.O if not v then v={c=__modImpl()}__DIST.cache.O=v end return v.c end end end--// Imports
+
+local utility = __DIST.a()
+local types = __DIST.b()
+local creator = __DIST.d()
+local binder = __DIST.c()
+local services = __DIST.e()
+
+local symbols = __DIST.f()
+local components = __DIST.K()
+
+local themes = __DIST.N()
+local accents = __DIST.O()
 
 --// References
 local create = creator.Create
@@ -10806,15 +11343,21 @@ local create = creator.Create
 local tweenService = services.TweenService
 
 --// Variables
-local accents = __DIST.load('M')
+local cascade = {
+	Themes = themes,
+	Accents = accents,
+	Symbols = symbols,
 
-local cascade = { Themes = themes, Symbols = symbols, Accents = accents }
+	Creator = creator,
+	Binder = binder,
+	Components = components,
+}
 
 local tweenInfo = TweenInfo.new(0.4, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out)
 local currentTween: Tween? = nil
 
 --// Functions
-local function deepCopy(original)
+local function deepCopy(original, identifier: string?)
 	local copy = {}
 	for key, value in pairs(original) do
 		local vType = typeof(value)
@@ -10828,34 +11371,55 @@ local function deepCopy(original)
 			copy[key] = value
 		end
 	end
+
+	if identifier and not original._id then
+		original._id = identifier
+	end
+
 	return copy
 end
 
--- Apply accent overrides onto an already-deepCopy'd theme
 local function parseAccent(theme, overrides)
 	for key, override in pairs(overrides) do
-		if key == "_id" then continue end
+		local themeObj = theme[key]
 
-		local themeObj = theme.Controls and theme.Controls[key]
-			or theme[key]
+		if not themeObj and type(theme) == "table" and type(theme.Controls) == "table" then
+			themeObj = theme.Controls[key]
+		end
 
-		if not themeObj then continue end
+		if not themeObj then
+			continue
+		end
 
 		if type(themeObj) == "table" and themeObj.Connect then
-			-- direct ValueState
 			themeObj.Value = override
 		elseif type(themeObj) == "table" and themeObj[1] and themeObj[1].Connect and typeof(override) == "Color3" then
-			-- color4 pair
 			themeObj[1].Value = override
 		elseif type(themeObj) == "table" and type(override) == "table" then
-			-- nested (e.g. Toggle, Button)
 			parseAccent(themeObj, override)
 		end
 	end
 end
 
+local function updateThemes(target, theme, accent)
+	local function deepUpdate(target, new)
+		for key, value in pairs(new) do
+			if type(value) == "table" and type(target[key]) == "table" and not value.Value then
+				deepUpdate(target[key], value)
+			elseif target[key] and value and value.Value ~= nil then
+				target[key].Value = value.Value
+			end
+		end
+	end
+	deepUpdate(target, theme)
+
+	if accent and accent[theme._id] then
+		parseAccent(target, accent[theme._id])
+	end
+end
+
 --// Initialize
-cascade.New = function(properties: AppProperties__DARKLUA_TYPE_p): App__DARKLUA_TYPE_q	
+cascade.New = function(properties: AppProperties__DARKLUA_TYPE_q): App__DARKLUA_TYPE_r	
 if not game:IsLoaded() then
 		game.Loaded:Wait()
 	end
@@ -10863,17 +11427,14 @@ if not game:IsLoaded() then
 	properties = properties or {}
 
 	local initialTheme = properties.Theme or themes.Light
-	properties.Theme = deepCopy(initialTheme)
+	local initialAccent = properties.Accent or accents.Blue
 
-	-- Apply accent if provided: Cascade.New({ Theme=Themes.Dark, Accent=Accents.Blue })
-	if properties.Accent then
-		local themeId = initialTheme._id or "Dark"
-		local accentVariant = properties.Accent[themeId] or properties.Accent.Dark
-		if accentVariant then
-			parseAccent(properties.Theme.Controls, accentVariant)
-			parseAccent(properties.Theme, accentVariant)
-		end
-	end
+	local currentBaseTheme = initialTheme
+
+	properties.Theme = deepCopy(initialTheme)
+	properties.Accent = deepCopy(initialAccent)
+
+	updateThemes(properties.Theme, initialTheme, initialAccent)
 
 	local container = utility.ProtectUI(create("ScreenGui")({
 		Name = "Cascade",
@@ -10911,9 +11472,9 @@ if not game:IsLoaded() then
 		end
 
 		currentTween = tweenService:Create(pill.__instance, tweenInfo, {
-			ImageTransparency = 0.15
+			ImageTransparency = 0.15,
 		})
-		
+
 		if currentTween then
 			currentTween:Play()
 		end
@@ -10925,7 +11486,7 @@ if not game:IsLoaded() then
 		end
 
 		currentTween = tweenService:Create(pill.__instance, tweenInfo, {
-			ImageTransparency = 0.5
+			ImageTransparency = 0.5,
 		})
 
 		if currentTween then
@@ -10937,32 +11498,66 @@ if not game:IsLoaded() then
 		WindowPill = function(value: boolean)
 			pill.Visible = value
 		end,
-		Theme = function(theme)
-			local function deepUpdate(target, new)
-				for key, value in pairs(new) do
-					if typeof(value) == "table" and typeof(target[key]) == "table" and not value.Value then
-						deepUpdate(target[key], value)
-					elseif target[key] and value and value.Value ~= nil then
-						target[key].Value = value.Value
-					end
-				end
-			end
-
-			deepUpdate(properties.Theme, theme)
+		Theme = function(newTheme)
+			currentBaseTheme = newTheme
+			updateThemes(properties.Theme, newTheme, properties.Accent)
 		end,
-	}, container, { "Theme" })
+		Accent = function(newAccent)
+			properties.Accent = deepCopy(newAccent, newAccent._id)
+			updateThemes(properties.Theme, currentBaseTheme, newAccent)
+		end,
+	}, container, { "Theme", "Accent" })
 
 	object.Structures = {
 		WindowPill = pill,
 	}
 
-	for component, make in pairs(components) do
-		object[component] = make
-	end
+	setmetatable(properties, { __index = components })
 
 	binder.Apply(properties, object)
 	task.defer(binder.Apply, properties, object)
+
 	return object
+end
+
+cascade.Component = function(properties: ComponentProperties__DARKLUA_TYPE_s?): ComponentContext__DARKLUA_TYPE_t	
+properties = properties or {}
+
+	local initialTheme = properties.Theme or themes.Light
+	local initialAccent = properties.Accent or accents.Blue
+
+	local currentBaseTheme = initialTheme
+
+	properties.Theme = deepCopy(initialTheme)
+	properties.Accent = deepCopy(initialAccent)
+
+	updateThemes(properties.Theme, initialTheme, initialAccent)
+
+	local object = binder.Wrap(properties, {
+		Theme = function(newTheme)
+			currentBaseTheme = newTheme
+			updateThemes(properties.Theme, newTheme, properties.Accent)
+		end,
+		Accent = function(newAccent)
+			properties.Accent = deepCopy(newAccent, newAccent._id)
+			updateThemes(properties.Theme, currentBaseTheme, newAccent)
+		end,
+	}, nil, { "Theme", "Accent" })
+
+	if properties.Parent then
+		object.__container = properties.Parent
+	end
+
+	setmetatable(properties, { __index = components })
+
+	binder.Apply(properties, object)
+	task.defer(binder.Apply, properties, object)
+
+	return object
+end
+
+cascade.RegisterComponent = function(name: string, make: (self: any, properties: any) -> any)
+	components.register(name, make)
 end
 
 return cascade
