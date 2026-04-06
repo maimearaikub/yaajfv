@@ -9885,15 +9885,25 @@ local creator = __DIST.d()
 
 		structures.Options[index] = optBtn.__instance
 
-		-- Initialise selected highlight สำหรับ multi
+		-- Initialise selected highlight
 		if multi then
 			local isSelected = table.find(selectedValues, name) ~= nil
 			selectedState[index] = isSelected
 			applyHighlight(optBtn, lbl, isSelected, false)
 		else
-			-- single: highlight ค่าเริ่มต้น
-			if properties.Value == name then
+			-- single: รองรับทั้ง Value เป็น string (ชื่อ option) หรือ index (number)
+			local initVal = properties.Value
+			local isInitSelected = (initVal == name) or (initVal == index)
+			if isInitSelected then
+				selectedState[index] = true
 				applyHighlight(optBtn, lbl, true, false)
+				-- อัปเดต label ด้วย
+				if structures.CurrentTab then
+					structures.CurrentTab.Visible = true
+					structures.CurrentTab.Text = tostring(name)
+				end
+			else
+				selectedState[index] = false
 			end
 		end
 
@@ -9901,7 +9911,8 @@ local creator = __DIST.d()
 		optBtn:GetPropertyChangedSignal("GuiState"):Connect(function()
 			if not object.Expanded then return end
 			local isHover = optBtn.GuiState == Enum.GuiState.Hover
-			local isSelected = multi and (selectedState[index] == true) or false
+			-- ตรวจ selectedState ทั้ง multi และ single mode
+			local isSelected = selectedState[index] == true
 			applyHighlight(optBtn, lbl, isSelected, isHover)
 		end)
 
