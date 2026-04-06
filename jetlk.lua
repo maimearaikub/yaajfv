@@ -9722,13 +9722,28 @@ end function __DIST.F():typeof(__modImpl())local v=__DIST.cache.F if not v then 
 local types = __DIST.b()
 
 return function(self, properties: PullDownButtonProperties__DARKLUA_TYPE_5): PullDownButton__DARKLUA_TYPE_6	--// Imports
-	
+
 local creator = __DIST.d()
 	local binder = __DIST.c()
 	local services = __DIST.e()
 
 	--// References
 	local create = creator.Create
+
+	--// Multi-select state
+	local multi = properties.Multi
+	local selectedValues = {}
+
+	if multi and properties.Value and type(properties.Value) == "table" then
+		for _, val in next, properties.Value do
+			table.insert(selectedValues, val)
+		end
+	end
+
+	-- Auto-label: ไม่ต้องส่ง Label ใน properties
+	if not properties.Label then
+		properties.Label = ""
+	end
 
 	local userInputService = services.UserInputService
 	local tweenService = services.TweenService
@@ -9764,7 +9779,7 @@ local creator = __DIST.d()
 		local viewportSize = camera.ViewportSize
 
 		local desiredX = bodyPos.X + HORIZONTAL_OFFSET
-		local desiredY = bodyPos.Y + (bodySize.Y * 3) + (VERTICAL_PADDING * 3) -- position below
+		local desiredY = bodyPos.Y + (bodySize.Y * 3) + (VERTICAL_PADDING * 3)
 
 		local maxX = math.max(EDGE_BUFFER, viewportSize.X - EDGE_BUFFER - menuSize.X)
 		local maxY = math.max(EDGE_BUFFER, viewportSize.Y - EDGE_BUFFER - menuSize.Y)
@@ -9775,9 +9790,38 @@ local creator = __DIST.d()
 		menu.Position = UDim2.new(0, desiredX, 0, desiredY)
 	end
 
+	-- อัปเดต auto-label: แสดง "Item1, Item2, ..." จาก selectedValues
+	local function updateAutoLabel()
+		if not structures.CurrentTab then return end
+		if not multi then return end
+		if #selectedValues == 0 then
+			structures.CurrentTab.Text = ""
+			structures.CurrentTab.Visible = false
+		else
+			structures.CurrentTab.Visible = true
+			structures.CurrentTab.Text = table.concat(selectedValues, ", ")
+		end
+	end
+
+	-- ตั้ง highlight บน option ตาม state: hover หรือ selected
+	local function applyHighlight(optBtn, lbl, isSelected, isHover)
+		if isSelected or isHover then
+			optBtn.BackgroundTransparency = self.Theme.Controls.SelectionFocused[2].Value
+			lbl.TextColor3 = self.Theme.Controls.SelectionFocusedAccent[1].Value
+			lbl.TextTransparency = self.Theme.Controls.SelectionFocusedAccent[2].Value
+		else
+			optBtn.BackgroundTransparency = 1
+			lbl.TextColor3 = self.Theme.Text.Primary[1].Value
+			lbl.TextTransparency = self.Theme.Text.Primary[2].Value
+		end
+	end
+
+	-- ตาราง track selected state ต่อ index (สำหรับ multi)
+	local selectedState = {}
+
 	local function option(object, name, index)
-		local option = nil
-		option = create("TextButton")({
+		local optBtn = nil
+		optBtn = create("TextButton")({
 			Name = "Item",
 			Size = UDim2.fromScale(1, 0),
 			AutoButtonColor = false,
@@ -9792,14 +9836,6 @@ local creator = __DIST.d()
 			__dynamicKeys = {
 				BackgroundColor3 = self.Theme.Controls.SelectionFocused[1],
 				BackgroundTransparency = self.Theme.Controls.SelectionFocused[2],
-			},
-			__contextKeys = {
-				BackgroundTransparency = function()
-					if not option then
-						return
-					end
-					return option.GuiState == Enum.GuiState.Hover and self.Theme.Controls.SelectionFocused[2].Value or 1
-				end,
 			},
 
 			create("UIPadding")({
@@ -9845,30 +9881,76 @@ local creator = __DIST.d()
 				CornerRadius = UDim.new(0, 5),
 			}),
 		}) :: TextButton
-		local label = option:FindFirstChild("Label")
+		local lbl = optBtn:FindFirstChild("Label")
 
-		structures.Options[index] = option.__instance
+		structures.Options[index] = optBtn.__instance
 
-		option:GetPropertyChangedSignal("GuiState"):Connect(function()
-			if not object.Expanded then
-				return
+		-- Initialise selected highlight สำหรับ multi
+		if multi then
+			local isSelected = table.find(selectedValues, name) ~= nil
+			selectedState[index] = isSelected
+			applyHighlight(optBtn, lbl, isSelected, false)
+		else
+			-- single: highlight ค่าเริ่มต้น
+			if properties.Value == name then
+				applyHighlight(optBtn, lbl, true, false)
 			end
+		end
 
-			if option.GuiState == Enum.GuiState.Hover then
-				option.BackgroundTransparency = self.Theme.Controls.SelectionFocused[2].Value
-
-				label.TextColor3 = self.Theme.Controls.SelectionFocusedAccent[1].Value
-				label.TextTransparency = self.Theme.Controls.SelectionFocusedAccent[2].Value
-			else
-				option.BackgroundTransparency = 1
-
-				label.TextColor3 = self.Theme.Text.Primary[1].Value
-				label.TextTransparency = self.Theme.Text.Primary[2].Value
-			end
+		-- Hover via GuiState (dist's proper approach)
+		optBtn:GetPropertyChangedSignal("GuiState"):Connect(function()
+			if not object.Expanded then return end
+			local isHover = optBtn.GuiState == Enum.GuiState.Hover
+			local isSelected = multi and (selectedState[index] == true) or false
+			applyHighlight(optBtn, lbl, isSelected, isHover)
 		end)
 
-		option.MouseButton1Click:Connect(function()
-			if object then
+		optBtn.MouseButton1Click:Connect(function()
+			if not object then return end
+			local key = properties.Options[index]
+
+			if multi then
+				-- toggle selection
+				local existing = table.find(selectedValues, key)
+				if not existing then
+					table.insert(selectedValues, key)
+					selectedState[index] = true
+				else
+					table.remove(selectedValues, existing)
+					selectedState[index] = false
+				end
+				applyHighlight(optBtn, lbl, selectedState[index], false)
+				updateAutoLabel()
+
+				if properties.ValueChanged then
+					properties.Value = table.clone(selectedValues)
+					object.Value = properties.Value
+				end
+			else
+				-- single: reset highlight ทุก option แล้วเลือกอันนี้
+				for i, sel in next, selectedState do
+					if sel then
+						selectedState[i] = false
+						local raw = structures.Options[i]
+						if raw then
+							local otherLbl = raw:FindFirstChild("Label")
+							if otherLbl then
+								raw.BackgroundTransparency = 1
+								otherLbl.TextColor3 = self.Theme.Text.Primary[1].Value
+								otherLbl.TextTransparency = self.Theme.Text.Primary[2].Value
+							end
+						end
+					end
+				end
+				selectedState[index] = true
+				applyHighlight(optBtn, lbl, true, false)
+
+				-- auto-label สำหรับ single mode
+				if structures.CurrentTab then
+					structures.CurrentTab.Visible = true
+					structures.CurrentTab.Text = tostring(key)
+				end
+
 				object.Expanded = false
 				object.Value = index
 			end
@@ -9985,11 +10067,12 @@ local creator = __DIST.d()
 
 			create("ScrollingFrame")({
 				Name = "PullDownMenu",
-				AutomaticSize = Enum.AutomaticSize.XY,
+				AutomaticSize = Enum.AutomaticSize.X,
 				BorderColor3 = Color3.fromRGB(0, 0, 0),
 				BorderSizePixel = 0,
 				AutomaticCanvasSize = Enum.AutomaticSize.Y,
 				CanvasSize = UDim2.new(),
+				Size = UDim2.new(0, 0, 0, 200),
 				ScrollBarImageColor3 = Color3.fromRGB(0, 0, 0),
 				ScrollBarImageTransparency = 0.5,
 				ScrollBarThickness = 3,
@@ -10033,12 +10116,18 @@ local creator = __DIST.d()
 	local object
 	local bindings = {
 		Options = function(value: { [number]: string })
-			for _, option in ipairs(structures.Options) do
-				option:Destroy()
+			for _, opt in ipairs(structures.Options) do
+				opt:Destroy()
 			end
+			table.clear(selectedState)
 
 			for index, _option in ipairs(value) do
 				option(object, _option, index)
+			end
+
+			-- อัปเดต label หลัง rebuild options
+			if multi then
+				updateAutoLabel()
 			end
 		end,
 
@@ -10064,16 +10153,21 @@ local creator = __DIST.d()
 		end,
 
 		Label = function(value: string)
-			if type(value) == "string" then
+			-- ถ้าผู้ใช้ส่ง Label มาให้ override auto-label
+			if type(value) == "string" and value ~= "" then
 				structures.CurrentTab.Visible = true
 				structures.CurrentTab.Text = value
 			end
 		end,
 
-		Value = function(value: number)
+		Value = function(value)
 			if properties.ValueChanged then
 				properties.Value = value
-				task.spawn(properties.ValueChanged, object, value)
+				if multi then
+					properties.ValueChanged(object, value)
+				else
+					task.spawn(properties.ValueChanged, object, properties.Options[value] or value)
+				end
 			end
 		end,
 	}
@@ -10085,21 +10179,38 @@ local creator = __DIST.d()
 	object.Structures = structures
 	object.Option = function(self, name: string?)
 		local index = #structures.Options + 1
-
 		option(object, name, index)
-
 		table.insert(object.Options, name)
-
 		return structures.Options[index]
+	end
+	object.SetValues = function(self, values)
+		if not values or type(values) ~= "table" then return end
+		for _, opt in next, structures.Options do
+			opt:Destroy()
+		end
+		table.clear(structures.Options)
+		table.clear(selectedState)
+		table.clear(object.Options)
+		for _, val in next, values do
+			table.insert(object.Options, val)
+			option(object, val, #structures.Options + 1)
+		end
+		if multi then updateAutoLabel() end
 	end
 	object.Remove = function(self, index: number?)
 		if index and structures.Options[index] then
 			structures.Options[index]:Destroy()
 			object.Options[index] = nil
+			selectedState[index] = nil
 		end
 	end
 
 	binder.Apply(properties, object)
+
+	-- แสดง auto-label สำหรับ multi ที่มี initial values
+	if multi and #selectedValues > 0 then
+		updateAutoLabel()
+	end
 
 	structures.Body:GetPropertyChangedSignal("AbsolutePosition"):Connect(anchor)
 	structures.Body:GetPropertyChangedSignal("AbsoluteSize"):Connect(anchor)
